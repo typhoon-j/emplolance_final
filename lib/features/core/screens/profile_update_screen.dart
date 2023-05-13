@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:emplolance/constants/colors.dart';
 import 'package:emplolance/constants/image_strings.dart';
 import 'package:emplolance/constants/sizes.dart';
@@ -6,7 +8,10 @@ import 'package:emplolance/features/authentication/controllers/profile_controlle
 import 'package:emplolance/features/authentication/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+
+import '../repository/image_repository.dart';
 
 class UpdateProfileScreen extends StatelessWidget {
   const UpdateProfileScreen({super.key});
@@ -14,6 +19,105 @@ class UpdateProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ProfileController());
+    StorageService storage = StorageService();
+    // ignore: no_leading_underscores_for_local_identifiers
+    var _imageUrl;
+
+    void _showImageDialog() {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Elija una opcion'),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  InkWell(
+                    onTap: () async {
+                      //Camera
+                      ImagePicker _picker = ImagePicker();
+                      final XFile? _image =
+                          await _picker.pickImage(source: ImageSource.camera);
+                      if (_image == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Imagen no seleccionada'),
+                          ),
+                        );
+                      }
+                      if (_image != null) {
+                        await storage.uploadImage(_image);
+                        _imageUrl = await storage.getDownloadURL(_image.name);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Imagen seleccionada'),
+                          ),
+                        );
+                        log(_imageUrl);
+                      }
+                      Navigator.pop(context);
+                    },
+                    child: Row(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.all(4.0),
+                          child: Icon(
+                            Icons.camera_alt_rounded,
+                          ),
+                        ),
+                        Text(
+                          'Camara',
+                          style: Theme.of(context).textTheme.headline4,
+                        ),
+                      ],
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () async {
+                      //Galery
+                      ImagePicker _picker = ImagePicker();
+                      final XFile? _image =
+                          await _picker.pickImage(source: ImageSource.gallery);
+                      if (_image == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Imagen no seleccionada'),
+                          ),
+                        );
+                      }
+                      if (_image != null) {
+                        await storage.uploadImage(_image);
+                        _imageUrl = await storage.getDownloadURL(_image.name);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Imagen seleccionada'),
+                          ),
+                        );
+                        log(_imageUrl);
+                      }
+                      Navigator.pop(context);
+                    },
+                    child: Row(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.all(4.0),
+                          child: Icon(
+                            Icons.image_rounded,
+                          ),
+                        ),
+                        Text(
+                          'Galeria',
+                          style: Theme.of(context).textTheme.headline4,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          });
+    }
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -34,6 +138,14 @@ class UpdateProfileScreen extends StatelessWidget {
               if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasData) {
                   UserModel userData = snapshot.data as UserModel;
+                  _imageUrl = userData.photo;
+                  final fullName =
+                      TextEditingController(text: userData.fullName);
+                  final email = TextEditingController(text: userData.email);
+                  final password =
+                      TextEditingController(text: userData.password);
+                  final description =
+                      TextEditingController(text: userData.description);
                   return Column(
                     children: [
                       Stack(
@@ -41,10 +153,13 @@ class UpdateProfileScreen extends StatelessWidget {
                           SizedBox(
                             width: 120,
                             height: 120,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(100),
-                              child: const Image(
-                                image: AssetImage(tProfileImge),
+                            child: ClipOval(
+                              //borderRadius: BorderRadius.circular(100),
+                              child: Image(
+                                image: NetworkImage(userData.photo),
+                                width: 120,
+                                height: 120,
+                                fit: BoxFit.cover,
                               ),
                             ),
                           ),
@@ -73,7 +188,7 @@ class UpdateProfileScreen extends StatelessWidget {
                         child: Column(
                           children: [
                             TextFormField(
-                              initialValue: userData.fullName,
+                              controller: fullName,
                               decoration: const InputDecoration(
                                   label: Text(tFullName),
                                   prefixIcon:
@@ -83,7 +198,7 @@ class UpdateProfileScreen extends StatelessWidget {
                               height: tDefaultSize - 20,
                             ),
                             TextFormField(
-                              initialValue: userData.email,
+                              controller: email,
                               decoration: const InputDecoration(
                                   label: Text(tEmail),
                                   prefixIcon: Icon(Icons.email_rounded)),
@@ -91,17 +206,37 @@ class UpdateProfileScreen extends StatelessWidget {
                             const SizedBox(
                               height: tDefaultSize - 20,
                             ),
-                            TextFormField(
-                              initialValue: userData.photo,
-                              decoration: const InputDecoration(
-                                  label: Text(tPhoto),
-                                  prefixIcon: Icon(Icons.numbers_rounded)),
+                            SizedBox(
+                              height: 100,
+                              child: Card(
+                                margin: EdgeInsets.zero,
+                                color: tPrimaryColor,
+                                child: Row(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {
+                                        _showImageDialog();
+                                      },
+                                      icon:
+                                          const Icon(Icons.add_circle_rounded),
+                                      color: tSecondaryColor,
+                                    ),
+                                    Text(
+                                      'Seleccionar imagen de Perfil',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline4
+                                          ?.apply(color: tSecondaryColor),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                             const SizedBox(
                               height: tDefaultSize - 20,
                             ),
                             TextFormField(
-                              initialValue: userData.description,
+                              controller: description,
                               decoration: const InputDecoration(
                                   label: Text(tDescription),
                                   prefixIcon:
@@ -114,7 +249,7 @@ class UpdateProfileScreen extends StatelessWidget {
                               height: tDefaultSize - 20,
                             ),
                             TextFormField(
-                              initialValue: userData.password,
+                              controller: password,
                               decoration: const InputDecoration(
                                   label: Text(tPassword),
                                   prefixIcon: Icon(Icons.fingerprint_rounded)),
@@ -125,8 +260,18 @@ class UpdateProfileScreen extends StatelessWidget {
                             SizedBox(
                               width: 200,
                               child: ElevatedButton(
-                                onPressed: () =>
-                                    Get.to(() => const UpdateProfileScreen()),
+                                onPressed: () async {
+                                  final userDataNew = UserModel(
+                                    id: userData.id,
+                                    fullName: fullName.text.trim(),
+                                    email: email.text.trim(),
+                                    photo: _imageUrl,
+                                    password: password.text.trim(),
+                                    description: description.text.trim(),
+                                    userId: userData.userId,
+                                  );
+                                  await controller.updateUserData(userDataNew);
+                                },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: tPrimaryColor,
                                   side: BorderSide.none,
@@ -137,41 +282,6 @@ class UpdateProfileScreen extends StatelessWidget {
                                   style: TextStyle(color: tDarkColor),
                                 ),
                               ),
-                            ),
-                            const SizedBox(
-                              height: tFormHeight,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text.rich(
-                                  TextSpan(
-                                    text: tJoined,
-                                    style: TextStyle(fontSize: 12),
-                                    children: [
-                                      TextSpan(
-                                        text: tJoinedAt,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                ElevatedButton(
-                                  onPressed: () {},
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor:
-                                        Colors.redAccent.withOpacity(0.1),
-                                    elevation: 0,
-                                    foregroundColor: Colors.red,
-                                    shape: const StadiumBorder(),
-                                    side: BorderSide.none,
-                                  ),
-                                  child: const Text(tDelete),
-                                ),
-                              ],
                             ),
                           ],
                         ),

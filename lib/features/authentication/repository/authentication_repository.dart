@@ -6,6 +6,8 @@ import 'package:emplolance/features/core/screens/dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
+import '../controllers/signup_controller.dart';
+import '../models/user_model.dart';
 import 'exceptions/login_email_password_failure.dart';
 
 class AuthenticationRepository extends GetxController {
@@ -29,20 +31,44 @@ class AuthenticationRepository extends GetxController {
   }
 
   Future<void> createUserWithEmailAndPassword(
-      String email, String password) async {
+      String email, String password, UserModel user) async {
     try {
       await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      firebaseUser.value != null
-          ? Get.offAll(() => const Dashboard())
-          : Get.to(() => const WelcomeScreen());
+
+      if (firebaseUser.value != null) {
+        final userModelNew = UserModel(
+          fullName: user.fullName,
+          email: user.email,
+          photo: user.photo,
+          password: user.password,
+          description: user.description,
+          userId: firebaseUser.value?.uid,
+        );
+        log((firebaseUser.value?.uid).toString());
+        SignUpController.instance.createUser(userModelNew);
+        Get.offAll(() => const Dashboard());
+      } else {
+        Get.to(() => const WelcomeScreen());
+      }
+      //firebaseUser.value != null          ?           :
     } on FirebaseAuthException catch (e) {
       final ex = SignUpWithEmailAndPasswordFailure.code(e.code);
       log('FIREBASE AUTH EXCEPTION -${ex.message}');
+      Get.showSnackbar(GetSnackBar(
+        title: 'Error',
+        message: ex.message.toString(),
+        duration: const Duration(seconds: 3),
+      ));
       throw ex;
     } catch (_) {
       const ex = SignUpWithEmailAndPasswordFailure();
       log('EXCEPTION - ${ex.message}');
+      Get.showSnackbar(GetSnackBar(
+        title: 'Error',
+        message: ex.message.toString(),
+        duration: const Duration(seconds: 3),
+      ));
       throw ex;
     }
   }

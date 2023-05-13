@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:emplolance/features/authentication/models/user_model.dart';
 import 'package:emplolance/features/authentication/repository/authentication_repository.dart';
 import 'package:emplolance/features/authentication/repository/user_repository.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class ProfileController extends GetxController {
@@ -20,5 +23,10 @@ class ProfileController extends GetxController {
 
   Future<List<UserModel>> getAllUser() async {
     return await _userRepo.allUser();
+  }
+
+  updateUserData(UserModel user) async {
+    log(user.id.toString());
+    await _userRepo.updateUserData(user);
   }
 }

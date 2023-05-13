@@ -157,6 +157,36 @@ class ProductSelectedScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
+                              const SizedBox(
+                                height: tFormHeight,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text.rich(
+                                    TextSpan(
+                                      text: 'Desea eliminar el anuncio? ',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {},
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor:
+                                          Colors.redAccent.withOpacity(0.1),
+                                      elevation: 0,
+                                      foregroundColor: Colors.red,
+                                      shape: const StadiumBorder(),
+                                      side: BorderSide.none,
+                                    ),
+                                    child: const Text('Eliminar'),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         ),

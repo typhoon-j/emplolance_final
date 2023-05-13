@@ -8,19 +8,19 @@ class SignUpWithEmailAndPasswordFailure {
     switch (code) {
       case 'weak-password':
         return const SignUpWithEmailAndPasswordFailure(
-            'Please enter a stronger password');
+            'Ingrese una contraseña más fuerte');
       case 'invalid-email':
         return const SignUpWithEmailAndPasswordFailure(
-            'Email is not valid or badly formatted');
+            'Email no valido o mal escrito');
       case 'email-already-in-use':
         return const SignUpWithEmailAndPasswordFailure(
-            'An account already exists for that email');
+            'Ya existe una cuenta con este correo');
       case 'operation-not-allowed':
         return const SignUpWithEmailAndPasswordFailure(
-            'Operation is not allowed');
+            'Operacion no permitida');
       case 'user-disabled':
         return const SignUpWithEmailAndPasswordFailure(
-            'This user is disabled. Contact support');
+            'El usuario esta deshabilitado. Contacte a soporte');
       default:
         return const SignUpWithEmailAndPasswordFailure();
     }

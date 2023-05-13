@@ -51,7 +51,7 @@ class ProfileScreen extends StatelessWidget {
                             child: ClipOval(
                                 //borderRadius: BorderRadius.circular(100),
                                 child: Image(
-                              image: AssetImage(tProfileImge),
+                              image: NetworkImage(userData.photo),
                               width: 120,
                               height: 120,
                               fit: BoxFit.cover,
