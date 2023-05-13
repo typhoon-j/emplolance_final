@@ -5,6 +5,7 @@ import 'package:emplolance/constants/colors.dart';
 import 'package:emplolance/features/authentication/controllers/image_picker_controller.dart';
 import 'package:emplolance/features/authentication/controllers/signup_controller.dart';
 import 'package:emplolance/features/authentication/models/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -12,6 +13,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../constants/sizes.dart';
 import '../../../constants/text_strings.dart';
+import '../../core/repository/image_repository.dart';
 
 class SignUpFormWidget extends StatelessWidget {
   const SignUpFormWidget({
@@ -21,9 +23,10 @@ class SignUpFormWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(SignUpController());
+    StorageService storage = StorageService();
+    // ignore: no_leading_underscores_for_local_identifiers
+    var _imageUrl;
 
-    //var imagePickerController = ImagePickerController.instanceImg;
-    final imagePickerController = Get.put(ImagePickerController());
     // ignore: no_leading_underscores_for_local_identifiers
     final _formKey = GlobalKey<FormState>();
 
@@ -37,10 +40,28 @@ class SignUpFormWidget extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   InkWell(
-                    onTap: () {
+                    onTap: () async {
                       //Camera
-                      controller.captureImageWithCamera();
-                      //imagePickerController.captureImageWithCamera();
+                      ImagePicker _picker = ImagePicker();
+                      final XFile? _image =
+                          await _picker.pickImage(source: ImageSource.camera);
+                      if (_image == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Imagen no seleccionada'),
+                          ),
+                        );
+                      }
+                      if (_image != null) {
+                        await storage.uploadImage(_image);
+                        _imageUrl = await storage.getDownloadURL(_image.name);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Imagen seleccionada'),
+                          ),
+                        );
+                        log(_imageUrl);
+                      }
                       Navigator.pop(context);
                     },
                     child: Row(
@@ -59,10 +80,28 @@ class SignUpFormWidget extends StatelessWidget {
                     ),
                   ),
                   InkWell(
-                    onTap: () {
+                    onTap: () async {
                       //Galery
-                      //imagePickerController.chooseImageFromGalery();
-                      controller.chooseImageFromGalery();
+                      ImagePicker _picker = ImagePicker();
+                      final XFile? _image =
+                          await _picker.pickImage(source: ImageSource.gallery);
+                      if (_image == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Imagen no seleccionada'),
+                          ),
+                        );
+                      }
+                      if (_image != null) {
+                        await storage.uploadImage(_image);
+                        _imageUrl = await storage.getDownloadURL(_image.name);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Imagen seleccionada'),
+                          ),
+                        );
+                        log(_imageUrl);
+                      }
                       Navigator.pop(context);
                     },
                     child: Row(
@@ -112,14 +151,6 @@ class SignUpFormWidget extends StatelessWidget {
             const SizedBox(
               height: tDefaultSize - 20,
             ),
-            /*    TextFormField(
-              controller: controller.photo,
-              decoration: const InputDecoration(
-                  label: Text(tPhoto), prefixIcon: Icon(Icons.numbers_rounded)),
-            ),
-            const SizedBox(
-              height: tDefaultSize - 20,
-            ),*/
             TextFormField(
               controller: controller.password,
               decoration: const InputDecoration(
@@ -130,36 +161,28 @@ class SignUpFormWidget extends StatelessWidget {
             const SizedBox(
               height: tDefaultSize - 20,
             ),
-            /* Center(
-              child: GestureDetector(
-                onTap: () {
-                  _showImageDialog();
-                },
-                child: CircleAvatar(
-                  radius: 90,
-                  backgroundImage: imageFile == null
-                      ? const AssetImage(
-                          'assets/images/profile/blank_profile.png')
-                      : Image.file(imageFile!).image,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: tDefaultSize - 20,
-            ),*/
-            Center(
-              child: GestureDetector(
-                onTap: () {
-                  //imagePickerController.chooseImageFromGalery();
-                  _showImageDialog();
-                },
-                child: CircleAvatar(
-                  radius: 80,
-                  backgroundImage: controller.profileImage == null
-                      ? const AssetImage(
-                          'assets/images/profile/blank_profile.png')
-                      : Image.file(controller.profileImage!).image,
-                  backgroundColor: Colors.black,
+            SizedBox(
+              height: 100,
+              child: Card(
+                margin: EdgeInsets.zero,
+                color: tPrimaryColor,
+                child: Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        _showImageDialog();
+                      },
+                      icon: const Icon(Icons.add_circle_rounded),
+                      color: tSecondaryColor,
+                    ),
+                    Text(
+                      'Seleccionar imagen de Perfil',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline4
+                          ?.apply(color: tSecondaryColor),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -187,16 +210,15 @@ class SignUpFormWidget extends StatelessWidget {
                         controller.email.text.trim(),
                         controller.password.text.trim());
 
-                    //Idea: pasar todo el model a createUser()
                     final user = UserModel(
                       fullName: controller.fullname.text.trim(),
                       email: controller.email.text.trim(),
-                      photo: controller.imageDownloadURL!,
+                      photo: _imageUrl.trim(),
                       password: controller.password.text.trim(),
                       description: controller.description.text.trim(),
                     );
-                    SignUpController.instance
-                        .createUser(user, controller.profileImage!);
+                    log(_imageUrl);
+                    SignUpController.instance.createUser(user);
                   }
                 },
                 child: Text(tSignup.toUpperCase()),

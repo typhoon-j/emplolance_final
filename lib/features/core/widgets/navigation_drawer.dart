@@ -3,6 +3,8 @@ import 'package:emplolance/features/core/screens/search_user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../screens/chat_screen.dart';
+
 class NavigationDrawer extends StatelessWidget {
   const NavigationDrawer({super.key});
 
@@ -22,7 +24,9 @@ class NavigationDrawer extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.forum_rounded),
               title: Text('Mensajes'),
-              onTap: () {},
+              onTap: () {
+                Get.to(() => const ChatScreen());
+              },
             ),
             ListTile(
               leading: Icon(Icons.person_search_rounded),

@@ -36,7 +36,7 @@ const String tForgetPasswordSubtitle =
 const String tResetViaEmail = 'Reset via Email Verification';
 
 //Dashboard Text
-const String tDashboardTitle = 'Bienvenido, ';
+const String tDashboardTitle = 'Hola, ';
 const String tDashboardHeading = 'Encuentra servicios para ti';
 const String tDashboardSearch = 'Buscar...';
 const String tDashboardBannerTitle1 = 'Arquitectura';

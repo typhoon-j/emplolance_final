@@ -26,40 +26,6 @@ class SignUpController extends GetxController {
 
   final userRepo = Get.put(UserRepository());
 
-  //----------------IMAGE PICKER----------------
-
-  Rx<File>? _pickedFile;
-
-  File? get profileImage => _pickedFile?.value;
-
-  void chooseImageFromGalery() async {
-    final pickedImageFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-
-    if (pickedImageFile != null) {
-      Get.snackbar(
-        'Imagen',
-        'Escogida con exito',
-      );
-    }
-
-    _pickedFile = Rx<File>(File(pickedImageFile!.path));
-  }
-
-  void captureImageWithCamera() async {
-    final pickedImageFile =
-        await ImagePicker().pickImage(source: ImageSource.camera);
-
-    if (pickedImageFile != null) {
-      Get.snackbar(
-        'Imagen',
-        'Capturada con exito',
-      );
-    }
-
-    _pickedFile = Rx<File>(File(pickedImageFile!.path));
-  }
-
   //----------------REGISTRO DE USUARIO----------------
 
   void registerUser(String email, String password) {
@@ -67,25 +33,7 @@ class SignUpController extends GetxController {
         .createUserWithEmailAndPassword(email, password);
   }
 
-  Future<void> createUser(UserModel user, File imageFile) async {
+  Future<void> createUser(UserModel user) async {
     await userRepo.createUser(user);
-    imageDownloadURL = await uploadImageToStorage(imageFile);
-  }
-
-  //----------------UPLOAD IMAGE TO STORAGE----------------
-
-  Future<String?> uploadImageToStorage(File imageFile) async {
-    Reference reference = FirebaseStorage.instance
-        .ref()
-        .child('profile_images')
-        .child(FirebaseAuth.instance.currentUser!.uid);
-
-    UploadTask uploadTask = reference.putFile(imageFile);
-    TaskSnapshot taskSnapshot = await uploadTask;
-
-    String? downloadUrlOfUploadedImage =
-        await taskSnapshot.ref.getDownloadURL();
-
-    return downloadUrlOfUploadedImage;
   }
 }
