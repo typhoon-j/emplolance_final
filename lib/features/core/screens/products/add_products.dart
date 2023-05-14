@@ -6,9 +6,6 @@ import 'package:emplolance/features/core/controllers/product_controller.dart';
 import 'package:emplolance/features/core/models/product_model.dart';
 import 'package:emplolance/features/core/repository/image_repository.dart';
 import 'package:emplolance/features/core/repository/product_repository.dart';
-import 'package:emplolance/features/core/screens/products/products_screen.dart';
-import 'package:emplolance/features/core/screens/profile_screen.dart';
-import 'package:emplolance/features/core/widgets/appbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,7 +14,6 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../authentication/models/user_model.dart';
-import '../../controllers/categories _controller.dart';
 
 class AddProductScreen extends StatelessWidget {
   AddProductScreen({super.key});
@@ -109,6 +105,9 @@ class AddProductScreen extends StatelessWidget {
                                     productController.newProduct.update(
                                         'imageUrl', (_) => imageUrl,
                                         ifAbsent: () => imageUrl);
+                                    const SnackBar(
+                                      content: Text('Imagen seleccionada'),
+                                    );
                                     log(productController
                                         .newProduct['imageUrl']);
                                   }

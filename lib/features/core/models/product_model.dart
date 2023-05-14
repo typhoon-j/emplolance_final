@@ -96,4 +96,16 @@ class ProductModel extends Equatable {
         description: 'Una descripcion',
         price: 95.1)
   ];
+
+  static List<ProductModel> allProducts = [
+    const ProductModel(
+        name: 'Desarrollo de Software',
+        userId: 'fkldjlfksd',
+        productId: 'dsdsadadkjlas',
+        category: 'Programacion',
+        imageUrl:
+            'https://firebasestorage.googleapis.com/v0/b/emplolance-1c684.appspot.com/o/categories_images%2Fprogramacion.png?alt=media&token=ef7f9f89-8454-4d29-a0c9-7d6b3ebda52f',
+        description: 'Una descripcion',
+        price: 95.1)
+  ];
 }

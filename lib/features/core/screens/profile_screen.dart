@@ -131,14 +131,15 @@ class ProfileScreen extends StatelessWidget {
                           Get.to(() => AddProductScreen());
                         },
                       ),
+                      ProfileMenuWidget(
+                          title: 'Solicitudes',
+                          icon: LineAwesomeIcons.bell,
+                          onPress: () {}),
                       const Divider(),
                       const SizedBox(
                         height: 10,
                       ),
-                      /* ProfileMenuWidget(
-                    title: 'Information',
-                    icon: LineAwesomeIcons.info,
-                    onPress: () {}),*/
+
                       ProfileMenuWidget(
                           title: 'Logout',
                           icon: LineAwesomeIcons.alternate_sign_out,

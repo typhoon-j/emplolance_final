@@ -4,6 +4,7 @@ import 'package:emplolance/constants/colors.dart';
 import 'package:emplolance/constants/sizes.dart';
 import 'package:emplolance/features/core/controllers/product_controller.dart';
 import 'package:emplolance/features/core/models/product_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
@@ -11,6 +12,7 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import '../../../../constants/image_strings.dart';
 import '../../widgets/products/UserDataProduct.dart';
 import '../../widgets/top_courses.dart';
+import '../request_product_screen.dart';
 
 class ProductSelectedScreen extends StatelessWidget {
   ProductSelectedScreen({
@@ -19,6 +21,8 @@ class ProductSelectedScreen extends StatelessWidget {
   }) : super(key: key);
 
   final controller = Get.put(ProductController());
+
+  final User? user = FirebaseAuth.instance.currentUser;
   final String productId;
 
   @override
@@ -79,13 +83,18 @@ class ProductSelectedScreen extends StatelessWidget {
                                             .headline4,
                                       ),
                                     ),
-                                    Text('5 ',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText2),
-                                    const Icon(
-                                      Icons.star_outlined,
-                                      size: 25,
+                                    //extraer widget  pasar datos de calificacion
+                                    Row(
+                                      children: [
+                                        Text('5 ',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText2),
+                                        const Icon(
+                                          Icons.star_outlined,
+                                          size: 25,
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
@@ -161,33 +170,74 @@ class ProductSelectedScreen extends StatelessWidget {
                               const SizedBox(
                                 height: tFormHeight,
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text.rich(
-                                    TextSpan(
-                                      text: 'Desea eliminar el anuncio? ',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
+                              productData.userId == user?.uid
+                                  ? Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Text.rich(
+                                          TextSpan(
+                                            text: 'Desea eliminar el anuncio? ',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () {},
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.redAccent
+                                                .withOpacity(0.1),
+                                            elevation: 0,
+                                            foregroundColor: Colors.red,
+                                            shape: const StadiumBorder(),
+                                            side: BorderSide.none,
+                                          ),
+                                          child: const Text('Eliminar'),
+                                        ),
+                                      ],
+                                    )
+                                  : const SizedBox(
+                                      height: 0.5,
+                                    ),
+                              productData.userId == user?.uid
+                                  ? const SizedBox(
+                                      height: 0.5,
+                                    )
+                                  : SizedBox(
+                                      width: double.infinity,
+                                      child: Container(
+                                        height: 60,
+                                        decoration: const BoxDecoration(
+                                          color: Color(0xFF17181C),
+                                        ),
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            Get.to(() => RequestProductScreen(
+                                                  productId:
+                                                      productData.productId,
+                                                  consumerUserId:
+                                                      (user?.uid).toString(),
+                                                  publisherUserId:
+                                                      productData.userId,
+                                                ));
+                                          },
+                                          child: Text(
+                                            'Solicitar',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline4
+                                                ?.apply(color: tSecondaryColor),
+                                          ),
+                                          style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    tPrimaryColor),
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  ElevatedButton(
-                                    onPressed: () {},
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          Colors.redAccent.withOpacity(0.1),
-                                      elevation: 0,
-                                      foregroundColor: Colors.red,
-                                      shape: const StadiumBorder(),
-                                      side: BorderSide.none,
-                                    ),
-                                    child: const Text('Eliminar'),
-                                  ),
-                                ],
-                              ),
                             ],
                           ),
                         ),
@@ -208,25 +258,7 @@ class ProductSelectedScreen extends StatelessWidget {
               );
             }
           }),
-      bottomNavigationBar: Container(
-        height: 60,
-        decoration: const BoxDecoration(
-          color: Color(0xFF17181C),
-        ),
-        child: ElevatedButton(
-          onPressed: () {},
-          child: Text(
-            'Solicitar',
-            style: Theme.of(context)
-                .textTheme
-                .headline4
-                ?.apply(color: tSecondaryColor),
-          ),
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(tPrimaryColor),
-          ),
-        ),
-      ),
+      //bottomNavigationBar:
     );
   }
 }

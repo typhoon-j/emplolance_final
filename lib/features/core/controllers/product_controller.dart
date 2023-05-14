@@ -9,6 +9,7 @@ class ProductController extends GetxController {
   //List<ProductModel> products = ProductModel.products.obs;
 
   var products = <ProductModel>[].obs;
+  var allProducts = <ProductModel>[].obs;
   //var productsUser = <ProductModel>[].obs;
 
   var newProduct = {}.obs;
@@ -16,6 +17,7 @@ class ProductController extends GetxController {
   @override
   void onInit() {
     products.bindStream(database.getUserProducts());
+    allProducts.bindStream(database.getAllProducts());
     super.onInit();
   }
 

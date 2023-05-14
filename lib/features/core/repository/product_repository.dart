@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emplolance/features/core/models/product_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:get/get.dart';
 
 import '../../authentication/models/user_model.dart';
 
@@ -24,7 +23,7 @@ class DatabaseService {
     });
   }
 
-  Stream<List<ProductModel>> getProducts() {
+  Stream<List<ProductModel>> getAllProducts() {
     return _firebaseFirestore
         .collection('products')
         .snapshots()
