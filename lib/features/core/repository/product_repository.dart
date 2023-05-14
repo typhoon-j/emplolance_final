@@ -5,6 +5,8 @@ import 'package:emplolance/features/core/models/product_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
+import '../../authentication/models/user_model.dart';
+
 class DatabaseService {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   final User? user = FirebaseAuth.instance.currentUser;
@@ -45,5 +47,14 @@ class DatabaseService {
 
   Future<void> addProduct(ProductModel product) {
     return _firebaseFirestore.collection('products').add(product.toMap());
+  }
+
+  Future<UserModel> getUserDetailsId(String userId) async {
+    final snapshot = await _firebaseFirestore
+        .collection('users')
+        .where('userId', isEqualTo: userId)
+        .get();
+    final userData = snapshot.docs.map((e) => UserModel.formSnapShot(e)).single;
+    return userData;
   }
 }

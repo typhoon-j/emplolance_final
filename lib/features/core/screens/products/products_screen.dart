@@ -81,13 +81,14 @@ class ProductScreen extends StatelessWidget {
                                           ),
                                         ),
                                         Flexible(
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(100),
+                                          child: ClipOval(
+                                            //borderRadius: BorderRadius.circular(100),
                                             child: Image(
                                               image: NetworkImage(listController
                                                   .products[index].imageUrl),
                                               height: 110,
+                                              width: 110,
+                                              fit: BoxFit.cover,
                                             ),
                                           ),
                                         ),

@@ -1,3 +1,4 @@
+import 'package:emplolance/features/authentication/repository/user_repository.dart';
 import 'package:emplolance/features/core/repository/product_repository.dart';
 import 'package:get/get.dart';
 
@@ -20,5 +21,9 @@ class ProductController extends GetxController {
 
   getProductData(String productId) {
     return database.getProductDetails(productId);
+  }
+
+  getUserData(String userId) {
+    return database.getUserDetailsId(userId);
   }
 }

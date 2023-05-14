@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 import '../../../../constants/image_strings.dart';
+import '../../widgets/products/UserDataProduct.dart';
 import '../../widgets/top_courses.dart';
 
 class ProductSelectedScreen extends StatelessWidget {
@@ -110,7 +111,7 @@ class ProductSelectedScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              UserDataProductWidget(),
+                              UserDataProductWidget(userId: productData.userId),
                               const SizedBox(
                                 height: 10,
                               ),
@@ -226,32 +227,6 @@ class ProductSelectedScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class UserDataProductWidget extends StatelessWidget {
-  const UserDataProductWidget({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const ClipOval(
-            //borderRadius: BorderRadius.circular(100),
-            child: Image(
-          image: AssetImage(tProfileImge),
-          width: 40,
-          height: 40,
-          fit: BoxFit.cover,
-        )),
-        Text(
-          'Paco Doe (harcode)',
-          style: Theme.of(context).textTheme.bodyText2,
-        ),
-      ],
     );
   }
 }
