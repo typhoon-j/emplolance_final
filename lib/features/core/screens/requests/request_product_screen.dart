@@ -1,17 +1,17 @@
 import 'dart:developer';
 
-import '../../../constants/colors.dart';
-import '../controllers/product_controller.dart';
+import '../../../../constants/colors.dart';
+import '../../controllers/product_controller.dart';
 import 'package:emplolance/features/core/controllers/request_controller.dart';
-import '../models/request_model.dart';
+import '../../models/request_model.dart';
 import 'package:emplolance/features/core/repository/request_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../../constants/sizes.dart';
-import '../models/product_model.dart';
+import '../../../../constants/sizes.dart';
+import '../../models/product_model.dart';
 
 class RequestProductScreen extends StatelessWidget {
   RequestProductScreen(

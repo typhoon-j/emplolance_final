@@ -5,6 +5,7 @@ import 'package:emplolance/constants/text_strings.dart';
 import 'package:emplolance/features/core/screens/products/add_products.dart';
 import 'package:emplolance/features/core/screens/products/products_screen.dart';
 import 'package:emplolance/features/core/screens/profile_update_screen.dart';
+import 'package:emplolance/features/core/screens/requests/requests_screen.dart';
 import 'package:emplolance/features/core/screens/user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -134,7 +135,9 @@ class ProfileScreen extends StatelessWidget {
                       ProfileMenuWidget(
                           title: 'Solicitudes',
                           icon: LineAwesomeIcons.bell,
-                          onPress: () {}),
+                          onPress: () {
+                            Get.to(() => RequestScreen());
+                          }),
                       const Divider(),
                       const SizedBox(
                         height: 10,

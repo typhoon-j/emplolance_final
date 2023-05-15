@@ -12,7 +12,7 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import '../../../../constants/image_strings.dart';
 import '../../widgets/products/UserDataProduct.dart';
 import '../../widgets/top_courses.dart';
-import '../request_product_screen.dart';
+import '../requests/request_product_screen.dart';
 
 class ProductSelectedScreen extends StatelessWidget {
   ProductSelectedScreen({

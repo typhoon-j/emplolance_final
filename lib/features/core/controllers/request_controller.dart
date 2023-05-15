@@ -9,6 +9,15 @@ class RequestController extends GetxController {
 
   @override
   void onInit() {
+    requests.bindStream(database.getUserRequests());
     super.onInit();
+  }
+
+  getConsumerData(String userId) {
+    return database.getUserDetailsId(userId);
+  }
+
+  getRequestData(String requestId) {
+    return database.getRequestDetails(requestId);
   }
 }

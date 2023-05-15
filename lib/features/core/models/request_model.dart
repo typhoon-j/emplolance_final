@@ -107,11 +107,11 @@ class RequestModel extends Equatable {
 
   static List<RequestModel> requests = [
     const RequestModel(
-        productId: 'productId',
-        consumerId: 'consumerId',
-        publisherId: 'publisherId',
-        description: 'description',
-        requestId: 'requestId',
+        productId: 'jkflds',
+        consumerId: 'kjglfjdkg',
+        publisherId: 'ifjsdlkfsd',
+        description: 'Programacion Dsecripcion',
+        requestId: 'kfldsf',
         isPending: true,
         isAccepted: false,
         isCancelled: false,
