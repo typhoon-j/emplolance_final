@@ -20,4 +20,8 @@ class RequestController extends GetxController {
   getRequestData(String requestId) {
     return database.getRequestDetails(requestId);
   }
+
+  updateRequestData(RequestModel request) async {
+    await database.updateRequestStatus(request);
+  }
 }

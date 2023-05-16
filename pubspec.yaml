@@ -48,6 +48,7 @@ dependencies:
   equatable: ^2.0.5
   uuid: ^3.0.7
   rounded_background_text: ^0.3.0
+  rating_dialog: ^2.0.4
 
 dev_dependencies:
   flutter_test:

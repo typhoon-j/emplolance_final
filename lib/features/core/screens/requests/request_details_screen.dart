@@ -3,12 +3,16 @@ import 'dart:developer';
 import 'package:emplolance/constants/colors.dart';
 import 'package:emplolance/constants/sizes.dart';
 import 'package:emplolance/features/core/controllers/request_controller.dart';
+import 'package:emplolance/features/core/controllers/rating_controller.dart';
 import 'package:emplolance/features/core/models/request_model.dart';
+import 'package:emplolance/features/core/screens/requests/product_requested_widget.dart';
 import 'package:emplolance/features/core/widgets/requests/price_product_wdget.dart';
 import 'package:emplolance/features/core/widgets/requests/product_data_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:rating_dialog/rating_dialog.dart';
 
 import '../../widgets/products/UserDataProduct.dart';
 import '../../widgets/top_courses.dart';
@@ -21,6 +25,8 @@ class RequestDetailsScreen extends StatelessWidget {
   }) : super(key: key);
 
   final controller = Get.put(RequestController());
+  final ratingController = Get.put(RatingController());
+  final User? user = FirebaseAuth.instance.currentUser;
 
   final String requestId;
 
@@ -46,23 +52,25 @@ class RequestDetailsScreen extends StatelessWidget {
                 RequestModel requestData = snapshot.data as RequestModel;
                 return Column(
                   children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8.0),
-                      child: Image(
-                        image:
-                            AssetImage('assets/images/profile/user_image.jpg'),
-                        alignment: Alignment.center,
-                        height: 250,
-                      ),
+                    const SizedBox(
+                      height: 10,
                     ),
+                    Text(
+                      'Anuncio Solicitado',
+                      style: Theme.of(context).textTheme.headline4,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    ProductRequestedWidget(productId: requestData.productId),
                     const SizedBox(
                       height: 10,
                     ),
                     Expanded(
                       child: Container(
                         width: double.infinity,
-                        padding: EdgeInsets.all(16.0),
-                        decoration: BoxDecoration(
+                        padding: const EdgeInsets.all(16.0),
+                        decoration: const BoxDecoration(
                           color: Color(0xFF222831),
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(16),
@@ -122,7 +130,7 @@ class RequestDetailsScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               requestData.isPending == true
@@ -130,7 +138,32 @@ class RequestDetailsScreen extends StatelessWidget {
                                       children: [
                                         Expanded(
                                           child: ElevatedButton(
-                                            onPressed: () {
+                                            onPressed: () async {
+                                              final requestAcceptData =
+                                                  RequestModel(
+                                                id: requestData.id,
+                                                requestId:
+                                                    requestData.requestId,
+                                                consumerId:
+                                                    requestData.consumerId,
+                                                publisherId:
+                                                    requestData.publisherId,
+                                                productId:
+                                                    requestData.productId,
+                                                description:
+                                                    requestData.description,
+                                                isPending: false,
+                                                isAccepted: true,
+                                                isCancelled:
+                                                    requestData.isCancelled,
+                                                isFinished:
+                                                    requestData.isFinished,
+                                                isInProgress:
+                                                    requestData.isInProgress,
+                                              );
+                                              await controller
+                                                  .updateRequestData(
+                                                      requestAcceptData);
                                               Get.to(() => const ChatScreen());
                                             },
                                             child: Text(
@@ -153,7 +186,34 @@ class RequestDetailsScreen extends StatelessWidget {
                                         ),
                                         Expanded(
                                           child: ElevatedButton(
-                                            onPressed: () => Get.back(),
+                                            onPressed: () async {
+                                              final requestCancelData =
+                                                  RequestModel(
+                                                id: requestData.id,
+                                                requestId:
+                                                    requestData.requestId,
+                                                consumerId:
+                                                    requestData.consumerId,
+                                                publisherId:
+                                                    requestData.publisherId,
+                                                productId:
+                                                    requestData.productId,
+                                                description:
+                                                    requestData.description,
+                                                isPending: false,
+                                                isAccepted:
+                                                    requestData.isAccepted,
+                                                isCancelled: true,
+                                                isFinished:
+                                                    requestData.isFinished,
+                                                isInProgress:
+                                                    requestData.isInProgress,
+                                              );
+                                              await controller
+                                                  .updateRequestData(
+                                                      requestCancelData);
+                                              Get.back();
+                                            },
                                             child: Text(
                                               'Rechazar',
                                               style: Theme.of(context)
@@ -170,53 +230,181 @@ class RequestDetailsScreen extends StatelessWidget {
                                         )
                                       ],
                                     )
-                                  : const SizedBox()
-
-                              /* SizedBox(
-                                      width: double.infinity,
-                                      child: Container(
-                                        height: 60,
-                                        decoration: const BoxDecoration(
-                                          color: Color(0xFF17181C),
-                                        ),
-                                        child: Container(
-                                          children: [
-                                            ElevatedButton(
-                                              onPressed: () {},
-                                              child: Text(
-                                                'Aceptar',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline4
-                                                    ?.apply(
-                                                        color: tSecondaryColor),
-                                              ),
-                                              style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStateProperty.all(
-                                                        tPrimaryColor),
-                                              ),
+                                  : const SizedBox(),
+                              requestData.isAccepted == true
+                                  ? Row(
+                                      children: [
+                                        Expanded(
+                                          child: ElevatedButton(
+                                            onPressed: () async {
+                                              final requestInProgressData =
+                                                  RequestModel(
+                                                id: requestData.id,
+                                                requestId:
+                                                    requestData.requestId,
+                                                consumerId:
+                                                    requestData.consumerId,
+                                                publisherId:
+                                                    requestData.publisherId,
+                                                productId:
+                                                    requestData.productId,
+                                                description:
+                                                    requestData.description,
+                                                isPending:
+                                                    requestData.isPending,
+                                                isAccepted: false,
+                                                isCancelled:
+                                                    requestData.isCancelled,
+                                                isFinished:
+                                                    requestData.isFinished,
+                                                isInProgress: true,
+                                              );
+                                              await controller
+                                                  .updateRequestData(
+                                                      requestInProgressData);
+                                              Get.back();
+                                            },
+                                            child: Text(
+                                              'Comenzar',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline4
+                                                  ?.apply(
+                                                      color: tSecondaryColor),
                                             ),
-                                            ElevatedButton(
-                                              onPressed: () {},
-                                              child: Text(
-                                                'Rechazar',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline4
-                                                    ?.apply(
-                                                        color: tSecondaryColor),
-                                              ),
-                                              style: ButtonStyle(
-                                                backgroundColor:
-                                                    MaterialStateProperty.all(
-                                                        tPrimaryColor),
-                                              ),
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(
+                                                      tPrimaryColor),
                                             ),
-                                          ],
+                                          ),
                                         ),
-                                      ),
-                                    ),*/
+                                        SizedBox(
+                                          width: 10.0,
+                                        ),
+                                        Expanded(
+                                          child: ElevatedButton(
+                                            onPressed: () async {
+                                              final requestCancelData =
+                                                  RequestModel(
+                                                id: requestData.id,
+                                                requestId:
+                                                    requestData.requestId,
+                                                consumerId:
+                                                    requestData.consumerId,
+                                                publisherId:
+                                                    requestData.publisherId,
+                                                productId:
+                                                    requestData.productId,
+                                                description:
+                                                    requestData.description,
+                                                isPending:
+                                                    requestData.isPending,
+                                                isAccepted: false,
+                                                isCancelled: true,
+                                                isFinished:
+                                                    requestData.isFinished,
+                                                isInProgress:
+                                                    requestData.isInProgress,
+                                              );
+                                              await controller
+                                                  .updateRequestData(
+                                                      requestCancelData);
+                                              Get.back();
+                                            },
+                                            child: Text(
+                                              'Rechazar',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline4
+                                                  ?.apply(color: tWhiteColor),
+                                            ),
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(
+                                                      Colors.red),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  : const SizedBox(),
+                              requestData.isInProgress == true
+                                  ? Row(
+                                      children: [
+                                        Expanded(
+                                          child: ElevatedButton(
+                                            onPressed: () async {
+                                              final requestFinishData =
+                                                  RequestModel(
+                                                id: requestData.id,
+                                                requestId:
+                                                    requestData.requestId,
+                                                consumerId:
+                                                    requestData.consumerId,
+                                                publisherId:
+                                                    requestData.publisherId,
+                                                productId:
+                                                    requestData.productId,
+                                                description:
+                                                    requestData.description,
+                                                isPending:
+                                                    requestData.isPending,
+                                                isAccepted:
+                                                    requestData.isAccepted,
+                                                isCancelled:
+                                                    requestData.isCancelled,
+                                                isFinished: true,
+                                                isInProgress: false,
+                                              );
+                                              await controller
+                                                  .updateRequestData(
+                                                      requestFinishData);
+                                              Get.back();
+                                            },
+                                            child: Text(
+                                              'Finalizar',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline4
+                                                  ?.apply(
+                                                      color: tSecondaryColor),
+                                            ),
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(
+                                                      tPrimaryColor),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : Row(
+                                      children: [
+                                        Expanded(
+                                          child: ElevatedButton(
+                                            onPressed: () {
+                                              ratingController.showRatingDialog(
+                                                  (user?.uid).toString(),
+                                                  requestData.consumerId);
+                                            },
+                                            child: Text(
+                                              'Calificar al usuario',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline4
+                                                  ?.apply(
+                                                      color: tSecondaryColor),
+                                            ),
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(
+                                                      tPrimaryColor),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                             ],
                           ),
                         ),

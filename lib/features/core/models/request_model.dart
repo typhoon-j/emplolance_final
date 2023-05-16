@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 class RequestModel extends Equatable {
+  final String? id;
   final String productId;
   final String consumerId;
   final String publisherId;
@@ -16,6 +17,7 @@ class RequestModel extends Equatable {
   final bool isFinished;
 
   const RequestModel({
+    this.id,
     required this.productId,
     required this.consumerId,
     required this.publisherId,
@@ -71,6 +73,7 @@ class RequestModel extends Equatable {
 
   factory RequestModel.fromSnapshot(DocumentSnapshot snap) {
     return RequestModel(
+      id: snap.id,
       productId: snap['productId'] as String,
       consumerId: snap['consumerId'] as String,
       publisherId: snap['publisherId'] as String,

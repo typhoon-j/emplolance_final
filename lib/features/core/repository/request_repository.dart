@@ -45,4 +45,12 @@ class RequestRepository {
         snapshot.docs.map((e) => RequestModel.fromSnapshot(e)).single;
     return requestData;
   }
+
+  Future<void> updateRequestStatus(RequestModel request) async {
+    log(request.isAccepted.toString());
+    await _firebaseFirestore
+        .collection('requests')
+        .doc(request.id)
+        .update(request.toMap());
+  }
 }
