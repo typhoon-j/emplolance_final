@@ -121,4 +121,18 @@ class RequestModel extends Equatable {
         isInProgress: false,
         isFinished: false)
   ];
+
+  static List<RequestModel> history = [
+    const RequestModel(
+        productId: 'jkflds',
+        consumerId: 'kjglfjdkg',
+        publisherId: 'ifjsdlkfsd',
+        description: 'Programacion Dsecripcion',
+        requestId: 'kfldsf',
+        isPending: true,
+        isAccepted: false,
+        isCancelled: false,
+        isInProgress: false,
+        isFinished: false)
+  ];
 }

@@ -43,4 +43,14 @@ class UserModel {
       userId: data['userId'],
     );
   }
+
+  static List<UserModel> users = [
+    const UserModel(
+        fullName: 'fullName',
+        email: 'email',
+        photo: 'photo',
+        password: 'password',
+        description: 'description',
+        userId: 'userId')
+  ];
 }

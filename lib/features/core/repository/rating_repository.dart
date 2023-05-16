@@ -22,4 +22,24 @@ class RatingRepository {
       return snapshot.docs.map((doc) => RatingModel.fromSnapshot(doc)).toList();
     });
   }
+
+  Future<List<RatingModel>> getUserSelectedRatings(String userId) async {
+    final snapshot = await _firebaseFirestore
+        .collection('ratings')
+        .where('ratedId', isEqualTo: userId)
+        .get();
+    final ratingData =
+        snapshot.docs.map((e) => RatingModel.fromSnapshot(e)).toList();
+    return ratingData;
+  }
+
+  Future<List<RatingModel>> getProductSelectedRatings(String productId) async {
+    final snapshot = await _firebaseFirestore
+        .collection('ratings')
+        .where('ratedId', isEqualTo: productId)
+        .get();
+    final ratingData =
+        snapshot.docs.map((e) => RatingModel.fromSnapshot(e)).toList();
+    return ratingData;
+  }
 }

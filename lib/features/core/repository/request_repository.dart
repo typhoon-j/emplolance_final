@@ -23,6 +23,19 @@ class RequestRepository {
     });
   }
 
+  Stream<List<RequestModel>> getUserHistory() {
+    log('User uid: ${user?.uid}');
+    return _firebaseFirestore
+        .collection('requests')
+        .where('consumerId', isEqualTo: user?.uid)
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.docs
+          .map((doc) => RequestModel.fromSnapshot(doc))
+          .toList();
+    });
+  }
+
   Future<void> addRequest(RequestModel request) {
     return _firebaseFirestore.collection('requests').add(request.toMap());
   }

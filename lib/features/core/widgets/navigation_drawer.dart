@@ -1,4 +1,5 @@
 import 'package:emplolance/features/core/screens/dashboard.dart';
+import 'package:emplolance/features/core/screens/history/history_screen.dart';
 import 'package:emplolance/features/core/screens/search_user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -44,8 +45,10 @@ class NavigationDrawer extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Icons.hourglass_bottom_rounded),
-              title: Text('Historial'),
-              onTap: () {},
+              title: Text('Historial y Solicitudes'),
+              onTap: () {
+                Get.to(() => const HistoryScreen());
+              },
             ),
           ],
         ),

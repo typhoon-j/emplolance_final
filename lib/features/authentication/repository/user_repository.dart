@@ -43,6 +43,13 @@ class UserRepository extends GetxController {
     return userData;
   }
 
+  Future<UserModel> getUserSelectedDetails(String userId) async {
+    final snapshot =
+        await _db.collection('users').where('userId', isEqualTo: userId).get();
+    final userData = snapshot.docs.map((e) => UserModel.formSnapShot(e)).single;
+    return userData;
+  }
+
   Future<void> updateUserData(UserModel user) async {
     log(user.id.toString());
     await _db.collection('users').doc(user.id).update(user.toJson());

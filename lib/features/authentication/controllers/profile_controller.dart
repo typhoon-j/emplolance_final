@@ -25,6 +25,10 @@ class ProfileController extends GetxController {
     return await _userRepo.allUser();
   }
 
+  getUserSelectedData(String userId) {
+    return _userRepo.getUserSelectedDetails(userId);
+  }
+
   updateUserData(UserModel user) async {
     log(user.id.toString());
     await _userRepo.updateUserData(user);

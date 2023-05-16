@@ -11,6 +11,7 @@ import '../widgets/banners.dart';
 import '../widgets/categories.dart';
 import '../widgets/search.dart';
 import '../widgets/top_courses.dart';
+import '../widgets/top_users.dart';
 
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
@@ -48,10 +49,6 @@ class Dashboard extends StatelessWidget {
                         height: tDashboardPadding,
                       ),
 
-                      //---------SEARCH BOX---------
-                      // DashboardSearchBox(txtTheme: txtTheme),
-                      //const SizedBox(height: tDashboardPadding,),
-
                       //---------CATEGORIES---------
                       Text(
                         tDashboardCategories,
@@ -62,7 +59,7 @@ class Dashboard extends StatelessWidget {
                         height: tDashboardCardPadding,
                       ),
 
-                      //---------TOP COURSES---------
+                      //---------TOP PRODUCTS---------
                       Text(
                         tDashboardTopCourses,
                         style: txtTheme.headline4?.apply(fontSizeFactor: 1.2),
@@ -81,6 +78,7 @@ class Dashboard extends StatelessWidget {
                         height: tDashboardPadding,
                       ),
 
+                      //---------TOP USERS---------
                       Text(
                         'Usuarios Mejor Calificados',
                         style: txtTheme.headline4?.apply(fontSizeFactor: 1.2),
@@ -91,7 +89,7 @@ class Dashboard extends StatelessWidget {
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
                           children: [
-                            DashboardTopCourses(txtTheme: txtTheme),
+                            DashboardTopUsers(txtTheme: txtTheme),
                           ],
                         ),
                       ),

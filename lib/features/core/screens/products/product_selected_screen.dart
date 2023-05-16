@@ -4,6 +4,7 @@ import 'package:emplolance/constants/colors.dart';
 import 'package:emplolance/constants/sizes.dart';
 import 'package:emplolance/features/core/controllers/product_controller.dart';
 import 'package:emplolance/features/core/models/product_model.dart';
+import 'package:emplolance/features/core/widgets/products/ratings_from_product_selected_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -157,16 +158,10 @@ class ProductSelectedScreen extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(
-                                height: 200,
-                                child: ListView(
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.horizontal,
-                                  children: [
-                                    DashboardTopCourses(
-                                        txtTheme: Theme.of(context).textTheme),
-                                  ],
-                                ),
+                                height: 20,
                               ),
+                              RatingsFromProductSelectedWidget(
+                                  productId: productId),
                               const SizedBox(
                                 height: tFormHeight,
                               ),

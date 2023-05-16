@@ -28,4 +28,8 @@ class ProductController extends GetxController {
   getUserData(String userId) {
     return database.getUserDetailsId(userId);
   }
+
+  Future<List<ProductModel>> getProductSelectedUser(String userId) async {
+    return await database.getUserSelectedProducts(userId);
+  }
 }

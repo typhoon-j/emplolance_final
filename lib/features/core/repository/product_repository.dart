@@ -34,6 +34,16 @@ class DatabaseService {
     });
   }
 
+  Future<List<ProductModel>> getUserSelectedProducts(String userId) async {
+    final snapshot = await _firebaseFirestore
+        .collection('products')
+        .where('userId', isEqualTo: userId)
+        .get();
+    final productData =
+        snapshot.docs.map((e) => ProductModel.fromSnapshot(e)).toList();
+    return productData;
+  }
+
   Future<ProductModel> getProductDetails(String productId) async {
     final snapshot = await _firebaseFirestore
         .collection('products')

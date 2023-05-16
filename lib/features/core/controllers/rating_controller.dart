@@ -5,16 +5,26 @@ import 'package:emplolance/features/core/repository/rating_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rating_dialog/rating_dialog.dart';
+import 'package:uuid/uuid.dart';
 
 class RatingController extends GetxController {
   final RatingRepository database = RatingRepository();
 
   var ratings = <RatingModel>[].obs;
+  var uuid = Uuid();
 
   @override
   void onInit() {
     ratings.bindStream(database.getUserRatings());
     super.onInit();
+  }
+
+  Future<List<RatingModel>> getRatingSelectedUser(String userId) async {
+    return await database.getUserSelectedRatings(userId);
+  }
+
+  Future<List<RatingModel>> getRatingSelectedProduct(String productId) async {
+    return await database.getProductSelectedRatings(productId);
   }
 
   @override
@@ -44,6 +54,7 @@ class RatingController extends GetxController {
               ratedId: consumerId,
               raterId: userId,
               rating: response.rating,
+              ratingId: (uuid.v1()).toString(),
               comment: response.comment);
           database.addRating(rating);
         }));

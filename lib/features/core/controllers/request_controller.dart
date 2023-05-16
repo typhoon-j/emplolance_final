@@ -5,11 +5,13 @@ import 'package:get/get.dart';
 class RequestController extends GetxController {
   final RequestRepository database = RequestRepository();
   var requests = <RequestModel>[].obs;
+  var history = <RequestModel>[].obs;
   var newRequest = {}.obs;
 
   @override
   void onInit() {
     requests.bindStream(database.getUserRequests());
+    history.bindStream(database.getUserHistory());
     super.onInit();
   }
 

@@ -8,11 +8,13 @@ class RatingModel extends Equatable {
   final String ratedId;
   final String raterId;
   final double rating;
+  final String ratingId;
   final String comment;
   const RatingModel({
     required this.ratedId,
     required this.raterId,
     required this.rating,
+    required this.ratingId,
     required this.comment,
   });
 
@@ -20,12 +22,14 @@ class RatingModel extends Equatable {
     String? ratedId,
     String? raterId,
     double? rating,
+    String? ratingId,
     String? comment,
   }) {
     return RatingModel(
       ratedId: ratedId ?? this.ratedId,
       raterId: raterId ?? this.raterId,
       rating: rating ?? this.rating,
+      ratingId: ratingId ?? this.ratingId,
       comment: comment ?? this.comment,
     );
   }
@@ -35,6 +39,7 @@ class RatingModel extends Equatable {
       'ratedId': ratedId,
       'raterId': raterId,
       'rating': rating,
+      'ratingId': ratingId,
       'comment': comment,
     };
   }
@@ -44,6 +49,7 @@ class RatingModel extends Equatable {
       ratedId: snap['ratedId'] as String,
       raterId: snap['raterId'] as String,
       rating: snap['rating'] as double,
+      ratingId: snap['ratingId'] as String,
       comment: snap['comment'] as String,
     );
   }
@@ -58,6 +64,10 @@ class RatingModel extends Equatable {
 
   static List<RatingModel> ratings = [
     const RatingModel(
-        ratedId: 'ratedId', raterId: 'raterId', rating: 5.0, comment: 'comment')
+        ratedId: 'ratedId',
+        raterId: 'raterId',
+        rating: 5.0,
+        ratingId: 'ratingId',
+        comment: 'comment')
   ];
 }

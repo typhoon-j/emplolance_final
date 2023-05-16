@@ -4,6 +4,7 @@ import 'package:emplolance/constants/sizes.dart';
 import 'package:emplolance/constants/text_strings.dart';
 import 'package:emplolance/features/core/controllers/rating_controller.dart';
 import 'package:emplolance/features/core/screens/products/add_products.dart';
+import 'package:emplolance/features/core/screens/products/product_selected_screen.dart';
 import 'package:emplolance/features/core/screens/products/products_screen.dart';
 import 'package:emplolance/features/core/screens/profile_update_screen.dart';
 import 'package:flutter/material.dart';
@@ -125,42 +126,94 @@ class UserScreen extends StatelessWidget {
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
                           children: [
-                            Expanded(
-                              child: Obx(
-                                () => ListView.builder(
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: listController.products.length,
-                                  itemBuilder: (context, index) =>
-                                      GestureDetector(
-                                    //  onTap: listController.products[index].onPress,
-                                    child: SizedBox(
-                                      width: 320,
-                                      height: 200,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            right: 10, top: 5),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              color: tCardBgColor),
-                                          padding: const EdgeInsets.all(10),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Flexible(
-                                                    child: Text(
-                                                      listController
-                                                          .products[index].name,
+                            Obx(
+                              () => ListView.builder(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: listController.products.length,
+                                itemBuilder: (context, index) =>
+                                    GestureDetector(
+                                  child: SizedBox(
+                                    width: 320,
+                                    height: 200,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          right: 10, top: 5),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            color: tCardBgColor),
+                                        padding: const EdgeInsets.all(10),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Flexible(
+                                                  child: Text(
+                                                    listController
+                                                        .products[index].name,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .headline4
+                                                        ?.apply(
+                                                            color:
+                                                                Colors.black),
+                                                    maxLines: 2,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                                Flexible(
+                                                  child: ClipOval(
+                                                    //borderRadius:                                                          BorderRadius.circular(                                                              100),
+                                                    child: Image(
+                                                      image: NetworkImage(
+                                                          listController
+                                                              .products[index]
+                                                              .imageUrl),
+                                                      height: 110,
+                                                      width: 110,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                ElevatedButton(
+                                                    style: ElevatedButton.styleFrom(
+                                                        shape:
+                                                            const CircleBorder()),
+                                                    onPressed: () {
+                                                      Get.to(() =>
+                                                          ProductSelectedScreen(
+                                                            productId: (listController
+                                                                    .products[
+                                                                        index]
+                                                                    .productId)
+                                                                .toString(),
+                                                          ));
+                                                    },
+                                                    child:
+                                                        const Icon(Icons.info)),
+                                                const SizedBox(
+                                                  width: tDashboardCardPadding,
+                                                ),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      'Claificacion: ',
                                                       style: Theme.of(context)
                                                           .textTheme
                                                           .headline4
@@ -171,71 +224,22 @@ class UserScreen extends StatelessWidget {
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                     ),
-                                                  ),
-                                                  Flexible(
-                                                    child: ClipOval(
-                                                      //borderRadius:                                                          BorderRadius.circular(                                                              100),
-                                                      child: Image(
-                                                        image: NetworkImage(
-                                                            listController
-                                                                .products[index]
-                                                                .imageUrl),
-                                                        height: 110,
-                                                        width: 110,
-                                                        fit: BoxFit.cover,
-                                                      ),
+                                                    Text(
+                                                      'Precio: ${listController.products[index].price}',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyText2
+                                                          ?.apply(
+                                                              color:
+                                                                  Colors.black),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
                                                     ),
-                                                  ),
-                                                ],
-                                              ),
-                                              Row(
-                                                children: [
-                                                  ElevatedButton(
-                                                      style: ElevatedButton
-                                                          .styleFrom(
-                                                              shape:
-                                                                  const CircleBorder()),
-                                                      onPressed: () {},
-                                                      child: const Icon(
-                                                          Icons.info)),
-                                                  const SizedBox(
-                                                    width:
-                                                        tDashboardCardPadding,
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        'Claificacion: ',
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .headline4
-                                                            ?.apply(
-                                                                color: Colors
-                                                                    .black),
-                                                        maxLines: 2,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                      ),
-                                                      Text(
-                                                        'Precio: ${listController.products[index].price}',
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .bodyText2
-                                                            ?.apply(
-                                                                color: Colors
-                                                                    .black),
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),
@@ -265,42 +269,74 @@ class UserScreen extends StatelessWidget {
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
                           children: [
-                            Expanded(
-                              child: Obx(
-                                () => ListView.builder(
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount:
-                                      listRatingController.ratings.length,
-                                  itemBuilder: (context, index) =>
-                                      GestureDetector(
-                                    //  onTap: listController.products[index].onPress,
-                                    child: SizedBox(
-                                      width: 320,
-                                      height: 200,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            right: 10, top: 5),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              color: tCardBgColor),
-                                          padding: const EdgeInsets.all(10),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Flexible(
-                                                    child: Text(
-                                                      '"${listRatingController.ratings[index].comment}"',
+                            Obx(
+                              () => ListView.builder(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: listRatingController.ratings.length,
+                                itemBuilder: (context, index) =>
+                                    GestureDetector(
+                                  child: SizedBox(
+                                    width: 320,
+                                    height: 200,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          right: 10, top: 5),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            color: tCardBgColor),
+                                        padding: const EdgeInsets.all(10),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Flexible(
+                                                  child: Text(
+                                                    '"${listRatingController.ratings[index].comment}"',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .headline4
+                                                        ?.apply(
+                                                            color:
+                                                                Colors.black),
+                                                    maxLines: 2,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                                RaterImageWidget(
+                                                  userId: listRatingController
+                                                      .ratings[index].raterId,
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                ElevatedButton(
+                                                    style: ElevatedButton.styleFrom(
+                                                        shape:
+                                                            const CircleBorder()),
+                                                    onPressed: () {},
+                                                    child:
+                                                        const Icon(Icons.info)),
+                                                const SizedBox(
+                                                  width: tDashboardCardPadding,
+                                                ),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      'Claificacion: ${listRatingController.ratings[index].rating}',
                                                       style: Theme.of(context)
                                                           .textTheme
                                                           .headline4
@@ -311,56 +347,16 @@ class UserScreen extends StatelessWidget {
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                     ),
-                                                  ),
-                                                  RaterImageWidget(
-                                                    userId: listRatingController
-                                                        .ratings[index].raterId,
-                                                  ),
-                                                ],
-                                              ),
-                                              Row(
-                                                children: [
-                                                  ElevatedButton(
-                                                      style: ElevatedButton
-                                                          .styleFrom(
-                                                              shape:
-                                                                  const CircleBorder()),
-                                                      onPressed: () {},
-                                                      child: const Icon(
-                                                          Icons.info)),
-                                                  const SizedBox(
-                                                    width:
-                                                        tDashboardCardPadding,
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        'Claificacion: ${listRatingController.ratings[index].rating}',
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .headline4
-                                                            ?.apply(
-                                                                color: Colors
-                                                                    .black),
-                                                        maxLines: 2,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                      ),
-                                                      RaterNameWidget(
-                                                          userId:
-                                                              listRatingController
-                                                                  .ratings[
-                                                                      index]
-                                                                  .raterId),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
+                                                    RaterNameWidget(
+                                                        userId:
+                                                            listRatingController
+                                                                .ratings[index]
+                                                                .raterId),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),
