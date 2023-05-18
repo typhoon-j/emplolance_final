@@ -1,5 +1,6 @@
 import 'package:emplolance/features/core/controllers/categories%20_controller.dart';
 import 'package:emplolance/features/core/models/categories_model.dart';
+import 'package:emplolance/features/core/screens/categories_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -28,7 +29,13 @@ class DashboardCategories extends StatelessWidget {
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) => GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Get.to(
+                      () => CategoriesScreen(
+                        category: snapshot.data![index].name,
+                      ),
+                    );
+                  },
                   //list[index].onPress,
                   child: SizedBox(
                     width: 170,

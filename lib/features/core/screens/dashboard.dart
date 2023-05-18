@@ -61,7 +61,7 @@ class Dashboard extends StatelessWidget {
 
                       //---------TOP PRODUCTS---------
                       Text(
-                        tDashboardTopCourses,
+                        'Ultimos anuncios Publicados',
                         style: txtTheme.headline4?.apply(fontSizeFactor: 1.2),
                       ),
                       SizedBox(
@@ -80,7 +80,7 @@ class Dashboard extends StatelessWidget {
 
                       //---------TOP USERS---------
                       Text(
-                        'Usuarios Mejor Calificados',
+                        'Conoce a algunos de nuestros usuarios!',
                         style: txtTheme.headline4?.apply(fontSizeFactor: 1.2),
                       ),
                       SizedBox(

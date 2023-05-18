@@ -6,6 +6,7 @@ import 'package:emplolance/features/core/controllers/rating_controller.dart';
 import 'package:emplolance/features/core/screens/products/add_products.dart';
 import 'package:emplolance/features/core/screens/products/products_screen.dart';
 import 'package:emplolance/features/core/screens/profile_update_screen.dart';
+import 'package:emplolance/features/core/screens/ratings/user_rating_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
@@ -76,16 +77,8 @@ class UserSelectedScreen extends StatelessWidget {
                         userData.fullName,
                         style: Theme.of(context).textTheme.headline4,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('5 ',
-                              style: Theme.of(context).textTheme.bodyText2),
-                          const Icon(
-                            Icons.star_outlined,
-                            size: 25,
-                          ),
-                        ],
+                      UserRatingWidget(
+                        userId: (userData.userId).toString(),
                       ),
                       //Text('5 ', //userData.email, style: Theme.of(context).textTheme.bodyText2, ),
                       const SizedBox(
@@ -99,8 +92,8 @@ class UserSelectedScreen extends StatelessWidget {
                           child: Padding(
                             padding: EdgeInsets.all(8.0),
                             child: Text(
-                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent malesuada laoreet urna, a ornare neque pellentesque ut. Integer vehicula aliquam justo elementum mollis.',
-                              //userData.description,
+                              //'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent malesuada laoreet urna, a ornare neque pellentesque ut. Integer vehicula aliquam justo elementum mollis.',
+                              userData.description,
                               maxLines: 5,
                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.center,

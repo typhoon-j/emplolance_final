@@ -1,24 +1,16 @@
+import 'package:emplolance/features/authentication/models/user_model.dart';
+import 'package:emplolance/features/core/models/product_model.dart';
+import 'package:emplolance/features/core/repository/search_repository.dart';
 import 'package:get/get.dart';
 
 class SearchUserController extends GetxController {
-  final List<Map<String, dynamic>> searchedUsers = [
-    {
-      'fullName': 'fullName',
-      'email': 'email',
-      'photo': 'photo',
-      'password': 'password',
-      'description': 'description',
-      'userId': 'userId'
-    },
-  ];
-
-  Rx<List<Map<String, dynamic>>> foundUsers =
-      Rx<List<Map<String, dynamic>>>([]);
+  SearchRepository database = SearchRepository();
+  var users = <UserModel>[].obs;
+  var products = <ProductModel>[].obs;
 
   @override
   void onInit() {
     super.onInit();
-    foundUsers.value = searchedUsers;
   }
 
   @override
@@ -28,18 +20,12 @@ class SearchUserController extends GetxController {
 
   @override
   void onClose() {}
-  void filterUser(String userName) {
-    List<Map<String, dynamic>> results = [];
-    if (userName.isEmpty) {
-      results = searchedUsers;
-    } else {
-      results = searchedUsers
-          .where((element) => element['fullname']
-              .toString()
-              .toLowerCase()
-              .contains(userName.toLowerCase()))
-          .toList();
-    }
-    foundUsers.value = results;
+
+  searchUser(String search) {
+    users.bindStream(database.getUserSearched(search));
+  }
+
+  searchProduct(String search, String category) {
+    products.bindStream(database.getProductSearched(search, category));
   }
 }

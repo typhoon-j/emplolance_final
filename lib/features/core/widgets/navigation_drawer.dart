@@ -1,10 +1,11 @@
 import 'package:emplolance/features/core/screens/dashboard.dart';
 import 'package:emplolance/features/core/screens/history/history_screen.dart';
-import 'package:emplolance/features/core/screens/search_user_screen.dart';
+import 'package:emplolance/features/core/screens/search/search_user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../screens/chat_screen.dart';
+import '../screens/search/search_product_screen.dart';
 
 class NavigationDrawer extends StatelessWidget {
   const NavigationDrawer({super.key});
@@ -40,7 +41,7 @@ class NavigationDrawer extends StatelessWidget {
               leading: Icon(Icons.travel_explore_rounded),
               title: Text('Busqueda por categorias'),
               onTap: () {
-                Get.to(() => const SearchUserScreen());
+                Get.to(() => const SearchProductScreen());
               },
             ),
             ListTile(

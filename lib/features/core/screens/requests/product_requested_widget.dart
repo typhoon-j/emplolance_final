@@ -7,6 +7,7 @@ import '../../../../constants/image_strings.dart';
 import '../../../../constants/sizes.dart';
 import '../../controllers/product_controller.dart';
 import '../../models/product_model.dart';
+import '../ratings/product_rating_dashboard_widget.dart';
 
 class ProductRequestedWidget extends StatelessWidget {
   ProductRequestedWidget({
@@ -86,14 +87,21 @@ class ProductRequestedWidget extends StatelessWidget {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    'Claificacion: ',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline4
-                                        ?.apply(color: Colors.black),
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'Claificacion: ',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline4
+                                            ?.apply(color: Colors.black),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      ProductRatingDashboardWidget(
+                                        productId: productData.productId,
+                                      )
+                                    ],
                                   ),
                                   Text(
                                     'Precio: ${productData.price}',

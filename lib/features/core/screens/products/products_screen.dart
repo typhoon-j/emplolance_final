@@ -9,6 +9,7 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 import '../../../../constants/colors.dart';
 import '../../../../constants/sizes.dart';
+import '../ratings/product_rating_dashboard_widget.dart';
 
 class ProductScreen extends StatelessWidget {
   const ProductScreen({Key? key}) : super(key: key);
@@ -116,14 +117,25 @@ class ProductScreen extends StatelessWidget {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              'Claificacion: ',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline4
-                                                  ?.apply(color: Colors.black),
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  'Claificacion: ',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline4
+                                                      ?.apply(
+                                                          color: Colors.black),
+                                                  maxLines: 2,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                                ProductRatingDashboardWidget(
+                                                  productId: listController
+                                                      .products[index]
+                                                      .productId,
+                                                )
+                                              ],
                                             ),
                                             Text(
                                               'Precio: ${listController.products[index].price}',

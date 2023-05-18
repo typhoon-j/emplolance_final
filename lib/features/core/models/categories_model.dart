@@ -13,8 +13,28 @@ class DashboardCategoriesModel {
     //this.onPress
   });
 
+  DashboardCategoriesModel copyWith({
+    String? id,
+    String? image,
+    String? name,
+  }) {
+    return DashboardCategoriesModel(
+      id: id ?? this.id,
+      image: image ?? this.image,
+      name: name ?? this.name,
+    );
+  }
+
   toJson() {
     return {
+      'image': image,
+      'name': name,
+    };
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
       'image': image,
       'name': name,
     };

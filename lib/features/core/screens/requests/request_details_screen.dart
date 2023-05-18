@@ -379,7 +379,9 @@ class RequestDetailsScreen extends StatelessWidget {
                                         ),
                                       ],
                                     )
-                                  : Row(
+                                  : const SizedBox(),
+                              requestData.isFinished == true
+                                  ? Row(
                                       children: [
                                         Expanded(
                                           child: ElevatedButton(
@@ -404,7 +406,8 @@ class RequestDetailsScreen extends StatelessWidget {
                                           ),
                                         ),
                                       ],
-                                    ),
+                                    )
+                                  : const SizedBox()
                             ],
                           ),
                         ),

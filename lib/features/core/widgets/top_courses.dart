@@ -7,6 +7,7 @@ import '../../../constants/colors.dart';
 import '../../../constants/image_strings.dart';
 import '../../../constants/sizes.dart';
 import '../controllers/product_controller.dart';
+import '../screens/ratings/product_rating_dashboard_widget.dart';
 
 class DashboardTopCourses extends StatelessWidget {
   const DashboardTopCourses({
@@ -87,12 +88,20 @@ class DashboardTopCourses extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Claificacion: ',
-                                style: txtTheme.headline4
-                                    ?.apply(color: Colors.black),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
+                              Row(
+                                children: [
+                                  Text(
+                                    'Claificacion: ',
+                                    style: txtTheme.headline4
+                                        ?.apply(color: Colors.black),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  ProductRatingDashboardWidget(
+                                    productId: listController
+                                        .allProducts[index].productId,
+                                  )
+                                ],
                               ),
                               Text(
                                 'Precio: ${listController.allProducts[index].price}',

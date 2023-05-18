@@ -24,7 +24,6 @@ class ProductDataFromRequestWidget extends StatelessWidget {
             return Text(
               productData.name,
               style: Theme.of(context).textTheme.headline4,
-              maxLines: 2,
               overflow: TextOverflow.ellipsis,
             );
           } else if (snapshot.hasError) {

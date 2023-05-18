@@ -19,15 +19,15 @@ const String tWelcomeSubTitle =
     'Prepárate para poder trabajar de lo que más te apasiona.';
 
 //Login Text
-const String tLoginTitle = 'Hello World';
-const String tLoginSubTitle = 'Subtitle Hello';
+const String tLoginTitle = 'Emplolance';
+const String tLoginSubTitle = 'Encuentra servicios para ti';
 const String tRememberMe = 'Recuerdame';
-const String tDontHaveAnAccount = 'Dont have an Account? ';
+const String tDontHaveAnAccount = '¿No tienes una cuenta? ';
 
 //Signup Text
-const String tSignUpTitle = 'Sign Up Text Welcome';
-const String tSignUpSubTitle = 'Tetxt Sign Up World';
-const String tAlreadyHaveAccount = 'Already have an Acount? ';
+const String tSignUpTitle = 'Benvenido a Emplolance';
+const String tSignUpSubTitle = 'Sumate a la comunidad freelance que ofrecemos';
+const String tAlreadyHaveAccount = '¿Ya tienes una cuenta? ';
 
 //Forget Password Text
 const String tForgetPasswordTitle = 'Make Selection';

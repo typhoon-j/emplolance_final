@@ -10,6 +10,7 @@ import '../../../constants/colors.dart';
 import '../../../constants/image_strings.dart';
 import '../../../constants/sizes.dart';
 import '../controllers/product_controller.dart';
+import '../screens/ratings/user_rating_dashboard_widget.dart';
 
 class DashboardTopUsers extends StatelessWidget {
   const DashboardTopUsers({
@@ -29,6 +30,7 @@ class DashboardTopUsers extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasData) {
+                snapshot.data!.shuffle();
                 return ListView.builder(
                   itemCount: snapshot.data!.length,
                   shrinkWrap: true,
@@ -96,19 +98,27 @@ class DashboardTopUsers extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        'Claificacion: ',
-                                        style: txtTheme.headline4
-                                            ?.apply(color: Colors.black),
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'Claificacion: ',
+                                            style: txtTheme.headline4
+                                                ?.apply(color: Colors.black),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          UserRatingDashboardWidget(
+                                            userId: snapshot.data![index].userId
+                                                .toString(),
+                                          )
+                                        ],
                                       ),
-                                      Text(
+                                      /*Text(
                                         'Precio: ${snapshot.data![index].description}',
                                         style: txtTheme.bodyText2
                                             ?.apply(color: Colors.black),
                                         overflow: TextOverflow.ellipsis,
-                                      ),
+                                      ),*/
                                     ],
                                   ),
                                 ],

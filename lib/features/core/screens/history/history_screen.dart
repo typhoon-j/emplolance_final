@@ -99,9 +99,7 @@ class HistoryScreen extends StatelessWidget {
                                                 productId: listController
                                                     .history[index].productId),
                                             //nombre del solicitante
-                                            ConsumerUserDataWidget(
-                                                userId: listController
-                                                    .history[index].consumerId),
+
                                             listController.history[index]
                                                         .isPending ==
                                                     true

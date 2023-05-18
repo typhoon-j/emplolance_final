@@ -26,7 +26,6 @@ class ConsumerUserDataWidget extends StatelessWidget {
             return Text(
               'Solicitante: ${userData.fullName}',
               style: Theme.of(context).textTheme.bodyText2,
-              maxLines: 2,
               overflow: TextOverflow.ellipsis,
             );
           } else if (snapshot.hasError) {

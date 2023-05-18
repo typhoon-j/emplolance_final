@@ -87,98 +87,108 @@ class RequestScreen extends StatelessWidget {
                                       const SizedBox(
                                         width: 10,
                                       ),
-                                      SizedBox(
-                                        height: 75,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            //nombre del anuncio solicitado
-                                            ProductDataFromRequestWidget(
-                                                productId: listController
-                                                    .requests[index].productId),
-                                            //nombre del solicitante
-                                            ConsumerUserDataWidget(
-                                                userId: listController
-                                                    .requests[index]
-                                                    .consumerId),
-                                            listController.requests[index]
-                                                        .isPending ==
-                                                    true
-                                                ? RoundedBackgroundText(
-                                                    'Pendiente',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline4
-                                                        ?.apply(
-                                                            color:
-                                                                tSecondaryColor),
-                                                    backgroundColor:
-                                                        tPrimaryColor,
-                                                    outerRadius: 90.0,
-                                                  )
-                                                : const SizedBox(),
-                                            listController.requests[index]
-                                                        .isAccepted ==
-                                                    true
-                                                ? RoundedBackgroundText(
-                                                    'Aceptado',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline4
-                                                        ?.apply(
-                                                            color: tWhiteColor),
-                                                    backgroundColor:
-                                                        const Color(0xFF064663),
-                                                    outerRadius: 90.0,
-                                                  )
-                                                : const SizedBox(),
-                                            listController.requests[index]
-                                                        .isCancelled ==
-                                                    true
-                                                ? RoundedBackgroundText(
-                                                    'Rechazado',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline4
-                                                        ?.apply(
-                                                            color: tWhiteColor),
-                                                    backgroundColor:
-                                                        const Color(0xFFDA0037),
-                                                    outerRadius: 90.0,
-                                                  )
-                                                : const SizedBox(),
-                                            listController.requests[index]
-                                                        .isInProgress ==
-                                                    true
-                                                ? RoundedBackgroundText(
-                                                    'En Progreso',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline4
-                                                        ?.apply(
-                                                            color: tWhiteColor),
-                                                    backgroundColor:
-                                                        const Color(0xFFEF6C00),
-                                                    outerRadius: 90.0,
-                                                  )
-                                                : const SizedBox(),
-                                            listController.requests[index]
-                                                        .isFinished ==
-                                                    true
-                                                ? RoundedBackgroundText(
-                                                    'Completado',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline4
-                                                        ?.apply(
-                                                            color: tWhiteColor),
-                                                    backgroundColor:
-                                                        Colors.black,
-                                                    outerRadius: 90.0,
-                                                  )
-                                                : const SizedBox(),
-                                          ],
+                                      Flexible(
+                                        child: SizedBox(
+                                          height: 75,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              //nombre del anuncio solicitado
+                                              ProductDataFromRequestWidget(
+                                                  productId: listController
+                                                      .requests[index]
+                                                      .productId),
+                                              //nombre del solicitante
+                                              ConsumerUserDataWidget(
+                                                  userId: listController
+                                                      .requests[index]
+                                                      .consumerId),
+                                              listController.requests[index]
+                                                          .isPending ==
+                                                      true
+                                                  ? RoundedBackgroundText(
+                                                      'Pendiente',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headline4
+                                                          ?.apply(
+                                                              color:
+                                                                  tSecondaryColor),
+                                                      backgroundColor:
+                                                          tPrimaryColor,
+                                                      outerRadius: 90.0,
+                                                    )
+                                                  : const SizedBox(),
+                                              listController.requests[index]
+                                                          .isAccepted ==
+                                                      true
+                                                  ? RoundedBackgroundText(
+                                                      'Aceptado',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headline4
+                                                          ?.apply(
+                                                              color:
+                                                                  tWhiteColor),
+                                                      backgroundColor:
+                                                          const Color(
+                                                              0xFF064663),
+                                                      outerRadius: 90.0,
+                                                    )
+                                                  : const SizedBox(),
+                                              listController.requests[index]
+                                                          .isCancelled ==
+                                                      true
+                                                  ? RoundedBackgroundText(
+                                                      'Rechazado',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headline4
+                                                          ?.apply(
+                                                              color:
+                                                                  tWhiteColor),
+                                                      backgroundColor:
+                                                          const Color(
+                                                              0xFFDA0037),
+                                                      outerRadius: 90.0,
+                                                    )
+                                                  : const SizedBox(),
+                                              listController.requests[index]
+                                                          .isInProgress ==
+                                                      true
+                                                  ? RoundedBackgroundText(
+                                                      'En Progreso',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headline4
+                                                          ?.apply(
+                                                              color:
+                                                                  tWhiteColor),
+                                                      backgroundColor:
+                                                          const Color(
+                                                              0xFFEF6C00),
+                                                      outerRadius: 90.0,
+                                                    )
+                                                  : const SizedBox(),
+                                              listController.requests[index]
+                                                          .isFinished ==
+                                                      true
+                                                  ? RoundedBackgroundText(
+                                                      'Completado',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headline4
+                                                          ?.apply(
+                                                              color:
+                                                                  tWhiteColor),
+                                                      backgroundColor:
+                                                          Colors.black,
+                                                      outerRadius: 90.0,
+                                                    )
+                                                  : const SizedBox(),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ],

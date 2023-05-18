@@ -13,6 +13,7 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import '../../../../constants/image_strings.dart';
 import '../../widgets/products/UserDataProduct.dart';
 import '../../widgets/top_courses.dart';
+import '../ratings/product_rating_widget.dart';
 import '../requests/request_product_screen.dart';
 
 class ProductSelectedScreen extends StatelessWidget {
@@ -85,18 +86,8 @@ class ProductSelectedScreen extends StatelessWidget {
                                       ),
                                     ),
                                     //extraer widget  pasar datos de calificacion
-                                    Row(
-                                      children: [
-                                        Text('5 ',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyText2),
-                                        const Icon(
-                                          Icons.star_outlined,
-                                          size: 25,
-                                        ),
-                                      ],
-                                    ),
+                                    ProductRatingWidget(
+                                        productId: productData.productId),
                                   ],
                                 ),
                               ),
@@ -147,37 +138,33 @@ class ProductSelectedScreen extends StatelessWidget {
                               SizedBox(
                                 height: 10,
                               ),
-                              Align(
-                                alignment: Alignment.topLeft,
-                                child: Text(
-                                  'Comentarios',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline4
-                                      ?.apply(fontSizeFactor: 1.2),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              RatingsFromProductSelectedWidget(
-                                  productId: productId),
-                              const SizedBox(
-                                height: tFormHeight,
-                              ),
                               productData.userId == user?.uid
-                                  ? Row(
+                                  ? /*Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         const Text.rich(
                                           TextSpan(
-                                            text: 'Desea eliminar el anuncio? ',
+                                            text: 'Acciones disponibles: ',
                                             style: TextStyle(
                                               fontSize: 12,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () {
+
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.amberAccent
+                                                .withOpacity(0.1),
+                                            elevation: 0,
+                                            foregroundColor: Colors.amber,
+                                            shape: const StadiumBorder(),
+                                            side: BorderSide.none,
+                                          ),
+                                          child: const Text('Actualizar'),
                                         ),
                                         ElevatedButton(
                                           onPressed: () {},
@@ -192,7 +179,8 @@ class ProductSelectedScreen extends StatelessWidget {
                                           child: const Text('Eliminar'),
                                         ),
                                       ],
-                                    )
+                                    )*/
+                                  const SizedBox()
                                   : const SizedBox(
                                       height: 0.5,
                                     ),
@@ -233,6 +221,24 @@ class ProductSelectedScreen extends StatelessWidget {
                                         ),
                                       ),
                                     ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  'Comentarios',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline4
+                                      ?.apply(fontSizeFactor: 1.2),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              RatingsFromProductSelectedWidget(
+                                  productId: productId),
                             ],
                           ),
                         ),

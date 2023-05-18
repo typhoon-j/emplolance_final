@@ -21,7 +21,8 @@ class ConsumerImageWidget extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasData) {
             UserModel userData = snapshot.data as UserModel;
-            return Flexible(
+            return SizedBox(
+              width: 50,
               child: ClipOval(
                 //borderRadius: BorderRadius.circular(100),
                 child: Image(
