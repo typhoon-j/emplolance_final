@@ -9,7 +9,6 @@ import '../../authentication/controllers/profile_controller.dart';
 import '../widgets/appbar.dart';
 import '../widgets/banners.dart';
 import '../widgets/categories.dart';
-import '../widgets/search.dart';
 import '../widgets/top_courses.dart';
 import '../widgets/top_users.dart';
 
