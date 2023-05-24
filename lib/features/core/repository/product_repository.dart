@@ -3,7 +3,10 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emplolance/features/core/models/product_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../../constants/colors.dart';
 import '../../authentication/models/user_model.dart';
 
 class DatabaseService {
@@ -55,7 +58,24 @@ class DatabaseService {
   }
 
   Future<void> addProduct(ProductModel product) {
-    return _firebaseFirestore.collection('products').add(product.toMap());
+    return _firebaseFirestore
+        .collection('products')
+        .add(product.toMap())
+        .whenComplete(
+          () => Get.snackbar(
+              'Anuncio Creado', 'Tu anuncio fue creado con exito!',
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: tPrimaryColor.withOpacity(0.4),
+              colorText: tSecondaryColor),
+        )
+        .catchError((error, stackTrace) {
+      Get.snackbar('Error', 'Something went wrong',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red.withOpacity(0.1),
+          colorText: Colors.red);
+      log(error.toString());
+    });
+    ;
   }
 
   Future<UserModel> getUserDetailsId(String userId) async {

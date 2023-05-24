@@ -8,11 +8,14 @@ import 'package:emplolance/features/core/models/request_model.dart';
 import 'package:emplolance/features/core/screens/requests/product_requested_widget.dart';
 import 'package:emplolance/features/core/widgets/requests/price_product_wdget.dart';
 import 'package:emplolance/features/core/widgets/requests/product_data_widget.dart';
+import 'package:emplolance/features/messaging/controllers/chat_controller.dart';
+import 'package:emplolance/features/messaging/models/chat_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:rating_dialog/rating_dialog.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../widgets/products/UserDataProduct.dart';
 import '../../widgets/top_courses.dart';
@@ -26,7 +29,9 @@ class RequestDetailsScreen extends StatelessWidget {
 
   final controller = Get.put(RequestController());
   final ratingController = Get.put(RatingController());
+  final chatController = Get.put(ChatController());
   final User? user = FirebaseAuth.instance.currentUser;
+  var uuid = Uuid();
 
   final String requestId;
 
@@ -164,7 +169,16 @@ class RequestDetailsScreen extends StatelessWidget {
                                               await controller
                                                   .updateRequestData(
                                                       requestAcceptData);
-                                              Get.to(() => const ChatScreen());
+                                              //Get.to(() => const ChatScreen());
+                                              final chatroomCreate = ChatModel(
+                                                  userId1:
+                                                      requestData.publisherId,
+                                                  userId2:
+                                                      requestData.consumerId,
+                                                  chatId: uuid.v1());
+                                              await chatController
+                                                  .createChatroom(
+                                                      chatroomCreate);
                                             },
                                             child: Text(
                                               'Aceptar',

@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 
 import '../../../../constants/colors.dart';
 import '../../../../constants/sizes.dart';
+import '../../screens/products/product_selected_screen.dart';
+import '../../screens/ratings/product_rating_dashboard_widget.dart';
 
 class ProductFromUserSelectedWidget extends StatelessWidget {
   const ProductFromUserSelectedWidget({
@@ -18,7 +20,7 @@ class ProductFromUserSelectedWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final listController = Get.put(ProductController());
     return SizedBox(
-      height: 200,
+      height: 210,
       child: ListView(
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
@@ -83,7 +85,14 @@ class ProductFromUserSelectedWidget extends StatelessWidget {
                                       ElevatedButton(
                                           style: ElevatedButton.styleFrom(
                                               shape: const CircleBorder()),
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Get.to(() => ProductSelectedScreen(
+                                                  productId: (snapshot
+                                                          .data![index]
+                                                          .productId)
+                                                      .toString(),
+                                                ));
+                                          },
                                           child: const Icon(Icons.info)),
                                       const SizedBox(
                                         width: tDashboardCardPadding,
@@ -101,6 +110,9 @@ class ProductFromUserSelectedWidget extends StatelessWidget {
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,
                                           ),
+                                          ProductRatingDashboardWidget(
+                                              productId: snapshot
+                                                  .data![index].productId),
                                           Text(
                                             'Precio: ${snapshot.data![index].price}',
                                             style: Theme.of(context)

@@ -27,4 +27,8 @@ class ChatController extends GetxController {
     log('UserData in controller: $userId');
     return _userRepo.getUserSelectedDetails(userId);
   }
+
+  Future<void> createChatroom(ChatModel chat) async {
+    await database.createChat(chat);
+  }
 }

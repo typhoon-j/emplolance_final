@@ -37,6 +37,26 @@ class SearchProductScreen extends StatelessWidget {
         child: Container(
           child: Column(
             children: [
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Busqueda de Productos por Categoria',
+                style: Theme.of(context).textTheme.headline4,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  'Seleccione una categoria: ',
+                  style: Theme.of(context).textTheme.headline4,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
               DropdownButtonFormField(
                   iconSize: 20,
                   decoration: const InputDecoration(hintText: 'Categoria'),
@@ -47,6 +67,16 @@ class SearchProductScreen extends StatelessWidget {
                   onChanged: (value) {
                     _selectedCategory = value.toString();
                   }),
+              const SizedBox(
+                height: 10,
+              ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  'Ingrese el nombre del producto: ',
+                  style: Theme.of(context).textTheme.headline4,
+                ),
+              ),
               const SizedBox(
                 height: 10,
               ),
@@ -63,6 +93,10 @@ class SearchProductScreen extends StatelessWidget {
                 height: 10,
               ),
               Divider(),
+              Text(
+                'Tus Resultados',
+                style: Theme.of(context).textTheme.headline4,
+              ),
               const SizedBox(
                 height: 10,
               ),

@@ -3,7 +3,10 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emplolance/features/messaging/models/chat_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../../constants/colors.dart';
 import '../../authentication/models/user_model.dart';
 
 class ChatRepository {
@@ -38,5 +41,27 @@ class ChatRepository {
         .get();
     final userData = snapshot.docs.map((e) => UserModel.formSnapShot(e)).single;
     return userData;
+  }
+
+  createChat(ChatModel chat) async {
+    await _firebaseFirestore
+        .collection('chats')
+        .doc(chat.chatId)
+        .set(chat.toMap())
+        .whenComplete(
+          () => Get.snackbar('Solicitud Aceptada',
+              'Se ha creado un chat para que te comuniques con el solicitante, hazlo lo más pronto posible',
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: tPrimaryColor.withOpacity(0.4),
+              colorText: tSecondaryColor,
+              duration: const Duration(seconds: 7)),
+        )
+        .catchError((error, stackTrace) {
+      Get.snackbar('Error', 'Something went wrong',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red.withOpacity(0.1),
+          colorText: Colors.red);
+      log(error.toString());
+    });
   }
 }

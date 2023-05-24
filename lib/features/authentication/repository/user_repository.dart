@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:emplolance/constants/colors.dart';
 import 'package:emplolance/features/authentication/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,10 +16,11 @@ class UserRepository extends GetxController {
         .collection('users')
         .add(user.toJson())
         .whenComplete(
-          () => Get.snackbar('Success', 'Your account has been created.',
+          () => Get.snackbar(
+              'Cuenta Creada', 'Tu cuenta ha sido creada con exito!',
               snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: Colors.green.withOpacity(0.1),
-              colorText: Colors.green),
+              backgroundColor: tPrimaryColor.withOpacity(0.4),
+              colorText: tSecondaryColor),
         )
         .catchError((error, stackTrace) {
       Get.snackbar('Error', 'Something went wrong',
@@ -52,6 +54,29 @@ class UserRepository extends GetxController {
 
   Future<void> updateUserData(UserModel user) async {
     log(user.id.toString());
-    await _db.collection('users').doc(user.id).update(user.toJson());
+    await _db
+        .collection('users')
+        .doc(user.id)
+        .update(user.toJson())
+        .whenComplete(
+          () => Get.snackbar(
+            'Datos Actualizados',
+            'Tus datos fueron actualizados con exito.',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: tPrimaryColor.withOpacity(0.4),
+            colorText: tSecondaryColor,
+          ),
+        )
+        .catchError((error, stackTrace) {
+      Get.snackbar(
+        'Error',
+        'Something went wrong',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red.withOpacity(0.1),
+        colorText: Colors.red,
+      );
+
+      log(error.toString());
+    });
   }
 }

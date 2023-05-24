@@ -3,7 +3,10 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emplolance/features/core/models/request_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../../constants/colors.dart';
 import '../../authentication/models/user_model.dart';
 
 class RequestRepository {
@@ -37,7 +40,24 @@ class RequestRepository {
   }
 
   Future<void> addRequest(RequestModel request) {
-    return _firebaseFirestore.collection('requests').add(request.toMap());
+    return _firebaseFirestore
+        .collection('requests')
+        .add(request.toMap())
+        .whenComplete(
+          () => Get.snackbar(
+              'Solicitud Realizada', 'Tu solicitud fue realizada con exito!',
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: tPrimaryColor.withOpacity(0.4),
+              colorText: tSecondaryColor),
+        )
+        .catchError((error, stackTrace) {
+      Get.snackbar('Error', 'Something went wrong',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red.withOpacity(0.1),
+          colorText: Colors.red);
+      log(error.toString());
+    });
+    ;
   }
 
   Future<UserModel> getUserDetailsId(String userId) async {

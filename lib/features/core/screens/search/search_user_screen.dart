@@ -21,6 +21,16 @@ class SearchUserScreen extends StatelessWidget {
         child: Container(
           child: Column(
             children: [
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Busqueda de usuarios',
+                style: Theme.of(context).textTheme.headline4,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
               TextField(
                 onChanged: (value) => controller.searchUser(value),
                 decoration: InputDecoration(
@@ -29,7 +39,14 @@ class SearchUserScreen extends StatelessWidget {
                   fillColor: Colors.transparent,
                 ),
               ),
-              Divider(),
+              const Divider(),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Tus Resultados',
+                style: Theme.of(context).textTheme.headline4,
+              ),
               SizedBox(
                 height: 200,
                 child: ListView(

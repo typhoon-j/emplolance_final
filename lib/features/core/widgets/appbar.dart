@@ -1,11 +1,10 @@
-import 'package:emplolance/features/authentication/repository/authentication_repository.dart';
 import 'package:emplolance/features/core/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../constants/colors.dart';
-import '../../../constants/image_strings.dart';
 import '../../../constants/text_strings.dart';
+import 'appbar_image_widget.dart';
 
 class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
   const DashboardAppBar({
@@ -28,19 +27,12 @@ class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
           margin: const EdgeInsets.only(right: 20, top: 7),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: tCardBgColor,
+            color: tSecondaryColor,
           ),
           child: IconButton(
             onPressed: () => Get.to(() => const ProfileScreen()),
             //{AuthenticationRepository.instance.logout();},
-            icon: ClipOval(
-                //borderRadius: BorderRadius.circular(100),
-                child: Image(
-              image: AssetImage(tProfileImge),
-              width: 120,
-              height: 120,
-              fit: BoxFit.cover,
-            )),
+            icon: const ClipOval(child: AppBarImageWidget()),
           ),
         ),
       ],

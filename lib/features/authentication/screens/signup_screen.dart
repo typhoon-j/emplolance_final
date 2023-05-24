@@ -4,8 +4,10 @@ import 'package:emplolance/constants/sizes.dart';
 import 'package:emplolance/constants/text_strings.dart';
 import 'package:emplolance/features/authentication/widgets/common/form_header_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../widgets/signup_form_widget.dart';
+import 'login_screen.dart';
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({super.key});
@@ -28,7 +30,7 @@ class SignupScreen extends StatelessWidget {
                 Column(
                   children: [
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () => Get.to(() => const LoginScreen()),
                       child: Text.rich(
                         TextSpan(
                           children: [
