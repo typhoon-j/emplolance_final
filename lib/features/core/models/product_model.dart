@@ -1,10 +1,11 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 class ProductModel extends Equatable {
-  //final String? uid;
+  final String? id;
   final String name;
   final String userId;
   final String productId;
@@ -14,6 +15,7 @@ class ProductModel extends Equatable {
   final double price;
 
   const ProductModel({
+    this.id,
     required this.name,
     required this.userId,
     required this.productId,
@@ -56,7 +58,9 @@ class ProductModel extends Equatable {
   }
 
   factory ProductModel.fromSnapshot(DocumentSnapshot snap) {
+    Map<String, dynamic> data = snap.data()! as Map<String, dynamic>;
     return ProductModel(
+      id: snap.id,
       name: snap['name'] as String,
       userId: snap['userId'] as String,
       productId: snap['productId'] as String,

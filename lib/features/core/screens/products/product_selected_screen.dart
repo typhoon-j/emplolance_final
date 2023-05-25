@@ -4,6 +4,7 @@ import 'package:emplolance/constants/colors.dart';
 import 'package:emplolance/constants/sizes.dart';
 import 'package:emplolance/features/core/controllers/product_controller.dart';
 import 'package:emplolance/features/core/models/product_model.dart';
+import 'package:emplolance/features/core/screens/products/update_product.dart';
 import 'package:emplolance/features/core/widgets/products/ratings_from_product_selected_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -98,7 +99,6 @@ class ProductSelectedScreen extends StatelessWidget {
                                     Expanded(
                                       child: Text(
                                         'Publicado por ',
-                                        //solucionar el nombre del usuario que publico esto xd
                                         style: Theme.of(context)
                                             .textTheme
                                             .headline6,
@@ -139,7 +139,7 @@ class ProductSelectedScreen extends StatelessWidget {
                                 height: 10,
                               ),
                               productData.userId == user?.uid
-                                  ? /*Row(
+                                  ? Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -154,7 +154,9 @@ class ProductSelectedScreen extends StatelessWidget {
                                         ),
                                         ElevatedButton(
                                           onPressed: () {
-
+                                            Get.to(() => UpdateProductScreen(
+                                                  productData: productData,
+                                                ));
                                           },
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor: Colors.amberAccent
@@ -176,11 +178,11 @@ class ProductSelectedScreen extends StatelessWidget {
                                             shape: const StadiumBorder(),
                                             side: BorderSide.none,
                                           ),
-                                          child: const Text('Eliminar'),
+                                          child: const Text('Desactivar'),
                                         ),
                                       ],
-                                    )*/
-                                  const SizedBox()
+                                    )
+                                  // const SizedBox()
                                   : const SizedBox(
                                       height: 0.5,
                                     ),

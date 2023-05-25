@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:emplolance/features/authentication/repository/user_repository.dart';
 import 'package:emplolance/features/core/repository/product_repository.dart';
 import 'package:get/get.dart';
@@ -13,6 +15,7 @@ class ProductController extends GetxController {
   //var productsUser = <ProductModel>[].obs;
 
   var newProduct = {}.obs;
+  var updatedProduct = {}.obs;
 
   @override
   void onInit() {
@@ -31,5 +34,10 @@ class ProductController extends GetxController {
 
   Future<List<ProductModel>> getProductSelectedUser(String userId) async {
     return await database.getUserSelectedProducts(userId);
+  }
+
+  updateProductData(ProductModel product) async {
+    log(product.id.toString());
+    await database.updateProduct(product);
   }
 }

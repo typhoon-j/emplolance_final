@@ -75,7 +75,28 @@ class DatabaseService {
           colorText: Colors.red);
       log(error.toString());
     });
-    ;
+  }
+
+  Future<void> updateProduct(ProductModel product) {
+    log(product.id!);
+    return _firebaseFirestore
+        .collection('products')
+        .doc(product.id)
+        .update(product.toMap())
+        .whenComplete(
+          () => Get.snackbar(
+              'Anuncio Actualizado', 'Tu anuncio fue actualizado con exito!',
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: tPrimaryColor.withOpacity(0.4),
+              colorText: tSecondaryColor),
+        )
+        .catchError((error, stackTrace) {
+      Get.snackbar('Error', 'Something went wrong',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red.withOpacity(0.1),
+          colorText: Colors.red);
+      log(error.toString());
+    });
   }
 
   Future<UserModel> getUserDetailsId(String userId) async {
