@@ -13,6 +13,7 @@ class ProductModel extends Equatable {
   final String imageUrl;
   final String description;
   final double price;
+  final bool active;
 
   const ProductModel({
     this.id,
@@ -23,6 +24,7 @@ class ProductModel extends Equatable {
     required this.imageUrl,
     required this.description,
     required this.price,
+    required this.active,
   });
 
   ProductModel copyWith({
@@ -33,6 +35,7 @@ class ProductModel extends Equatable {
     String? imageUrl,
     String? description,
     double? price,
+    bool? active,
   }) {
     return ProductModel(
       name: name ?? this.name,
@@ -42,6 +45,7 @@ class ProductModel extends Equatable {
       imageUrl: imageUrl ?? this.imageUrl,
       description: description ?? this.description,
       price: price ?? this.price,
+      active: active ?? this.active,
     );
   }
 
@@ -54,6 +58,7 @@ class ProductModel extends Equatable {
       'imageUrl': imageUrl,
       'description': description,
       'price': price,
+      'active': active,
     };
   }
 
@@ -68,6 +73,7 @@ class ProductModel extends Equatable {
       imageUrl: snap['imageUrl'] as String,
       description: snap['description'] as String,
       price: snap['price'] as double,
+      active: snap['active'] as bool,
     );
   }
 
@@ -86,6 +92,7 @@ class ProductModel extends Equatable {
       imageUrl,
       description,
       price,
+      active,
     ];
   }
 
@@ -98,7 +105,8 @@ class ProductModel extends Equatable {
         imageUrl:
             'https://firebasestorage.googleapis.com/v0/b/emplolance-1c684.appspot.com/o/categories_images%2Fprogramacion.png?alt=media&token=ef7f9f89-8454-4d29-a0c9-7d6b3ebda52f',
         description: 'Una descripcion',
-        price: 95.1)
+        price: 95.1,
+        active: true)
   ];
 
   static List<ProductModel> allProducts = [
@@ -110,6 +118,7 @@ class ProductModel extends Equatable {
         imageUrl:
             'https://firebasestorage.googleapis.com/v0/b/emplolance-1c684.appspot.com/o/categories_images%2Fprogramacion.png?alt=media&token=ef7f9f89-8454-4d29-a0c9-7d6b3ebda52f',
         description: 'Una descripcion',
-        price: 95.1)
+        price: 95.1,
+        active: true)
   ];
 }

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../../constants/colors.dart';
 import '../../../../constants/sizes.dart';
 import '../../models/rating_model.dart';
+import '../../screens/comments/user_comment_screen.dart';
 import '../ratings/rater_image_widget.dart';
 import '../ratings/rater_name_widget.dart';
 
@@ -77,7 +78,13 @@ class RatingsFromUserSelectedWidget extends StatelessWidget {
                                       ElevatedButton(
                                           style: ElevatedButton.styleFrom(
                                               shape: const CircleBorder()),
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Get.to(() => UserCommentScreen(
+                                                  userId: userId.toString(),
+                                                  ratingData:
+                                                      snapshot.data![index],
+                                                ));
+                                          },
                                           child: const Icon(Icons.info)),
                                       const SizedBox(
                                         width: tDashboardCardPadding,

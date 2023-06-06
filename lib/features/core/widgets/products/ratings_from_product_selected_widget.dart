@@ -1,4 +1,5 @@
 import 'package:emplolance/features/core/controllers/rating_controller.dart';
+import 'package:emplolance/features/core/screens/comments/product_comment_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -77,7 +78,13 @@ class RatingsFromProductSelectedWidget extends StatelessWidget {
                                       ElevatedButton(
                                           style: ElevatedButton.styleFrom(
                                               shape: const CircleBorder()),
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Get.to(() => ProductCommentScreen(
+                                                  ratingData:
+                                                      snapshot.data![index],
+                                                  productId: productId,
+                                                ));
+                                          },
                                           child: const Icon(Icons.info)),
                                       const SizedBox(
                                         width: tDashboardCardPadding,

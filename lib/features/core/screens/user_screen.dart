@@ -20,6 +20,7 @@ import '../widgets/profile_menu.dart';
 import '../widgets/ratings/rater_image_widget.dart';
 import '../widgets/ratings/rater_name_widget.dart';
 import '../widgets/user_selected/products_from_user_selected_widget.dart';
+import 'comments/user_comment_screen.dart';
 
 class UserScreen extends StatelessWidget {
   const UserScreen({super.key});
@@ -191,7 +192,18 @@ class UserScreen extends StatelessWidget {
                                                     style: ElevatedButton.styleFrom(
                                                         shape:
                                                             const CircleBorder()),
-                                                    onPressed: () {},
+                                                    onPressed: () {
+                                                      Get.to(() =>
+                                                          UserCommentScreen(
+                                                            userId: userData
+                                                                .userId
+                                                                .toString(),
+                                                            ratingData:
+                                                                listRatingController
+                                                                        .ratings[
+                                                                    index],
+                                                          ));
+                                                    },
                                                     child:
                                                         const Icon(Icons.info)),
                                                 const SizedBox(

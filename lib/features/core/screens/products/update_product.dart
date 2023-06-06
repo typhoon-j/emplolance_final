@@ -186,6 +186,7 @@ class UpdateProductScreen extends StatelessWidget {
                                 userId: productData.userId,
                                 productId: productData.productId,
                                 price: double.parse(price.text.trim()),
+                                active: productData.active,
                               );
                               await productController
                                   .updateProductData(newProductData);

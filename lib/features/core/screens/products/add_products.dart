@@ -189,6 +189,7 @@ class AddProductScreen extends StatelessWidget {
                                       productController.newProduct['productId'],
                                   price: double.parse(
                                       productController.newProduct['price']),
+                                  active: true,
                                 ),
                               );
                               Get.back();
