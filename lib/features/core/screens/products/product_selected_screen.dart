@@ -168,18 +168,73 @@ class ProductSelectedScreen extends StatelessWidget {
                                           ),
                                           child: const Text('Actualizar'),
                                         ),
-                                        ElevatedButton(
-                                          onPressed: () {},
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.redAccent
-                                                .withOpacity(0.1),
-                                            elevation: 0,
-                                            foregroundColor: Colors.red,
-                                            shape: const StadiumBorder(),
-                                            side: BorderSide.none,
-                                          ),
-                                          child: const Text('Desactivar'),
-                                        ),
+                                        productData.active == true
+                                            ? ElevatedButton(
+                                                onPressed: () async {
+                                                  final productAvailableData =
+                                                      ProductModel(
+                                                    id: productData.id,
+                                                    name: productData.name,
+                                                    category:
+                                                        productData.category,
+                                                    imageUrl:
+                                                        productData.imageUrl,
+                                                    description:
+                                                        productData.description,
+                                                    userId: productData.userId,
+                                                    productId:
+                                                        productData.productId,
+                                                    price: productData.price,
+                                                    active: false,
+                                                  );
+                                                  await controller
+                                                      .updateProductAvailableData(
+                                                          productAvailableData);
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor: Colors
+                                                      .redAccent
+                                                      .withOpacity(0.1),
+                                                  elevation: 0,
+                                                  foregroundColor: Colors.red,
+                                                  shape: const StadiumBorder(),
+                                                  side: BorderSide.none,
+                                                ),
+                                                child: const Text('Desactivar'),
+                                              )
+                                            : ElevatedButton(
+                                                onPressed: () async {
+                                                  final productAvailableData =
+                                                      ProductModel(
+                                                    id: productData.id,
+                                                    name: productData.name,
+                                                    category:
+                                                        productData.category,
+                                                    imageUrl:
+                                                        productData.imageUrl,
+                                                    description:
+                                                        productData.description,
+                                                    userId: productData.userId,
+                                                    productId:
+                                                        productData.productId,
+                                                    price: productData.price,
+                                                    active: true,
+                                                  );
+                                                  await controller
+                                                      .updateProductAvailableData(
+                                                          productAvailableData);
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor: Colors
+                                                      .redAccent
+                                                      .withOpacity(0.1),
+                                                  elevation: 0,
+                                                  foregroundColor: Colors.green,
+                                                  shape: const StadiumBorder(),
+                                                  side: BorderSide.none,
+                                                ),
+                                                child: const Text('Activar'),
+                                              ),
                                       ],
                                     )
                                   // const SizedBox()

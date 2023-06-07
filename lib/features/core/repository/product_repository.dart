@@ -107,4 +107,32 @@ class DatabaseService {
     final userData = snapshot.docs.map((e) => UserModel.formSnapShot(e)).single;
     return userData;
   }
+
+  Future<void> updateProductAvailableData(ProductModel product) async {
+    log(product.id.toString());
+    await _firebaseFirestore
+        .collection('products')
+        .doc(product.id)
+        .update(product.toMap())
+        .whenComplete(
+          () => Get.snackbar(
+            'Datos Actualizados',
+            'Anuncio actualizado con exito.',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: tPrimaryColor.withOpacity(0.4),
+            colorText: tSecondaryColor,
+          ),
+        )
+        .catchError((error, stackTrace) {
+      Get.snackbar(
+        'Error',
+        'Something went wrong',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red.withOpacity(0.1),
+        colorText: Colors.red,
+      );
+
+      log(error.toString());
+    });
+  }
 }

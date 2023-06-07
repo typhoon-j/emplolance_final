@@ -40,4 +40,8 @@ class ProductController extends GetxController {
     log(product.id.toString());
     await database.updateProduct(product);
   }
+
+  updateProductAvailableData(ProductModel productAvailableData) async {
+    await database.updateProductAvailableData(productAvailableData);
+  }
 }
