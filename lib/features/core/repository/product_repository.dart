@@ -29,6 +29,7 @@ class DatabaseService {
   Stream<List<ProductModel>> getAllProducts() {
     return _firebaseFirestore
         .collection('products')
+        .where('active', isEqualTo: true)
         .snapshots()
         .map((snapshot) {
       return snapshot.docs
@@ -41,6 +42,7 @@ class DatabaseService {
     final snapshot = await _firebaseFirestore
         .collection('products')
         .where('userId', isEqualTo: userId)
+        .where('active', isEqualTo: true)
         .get();
     final productData =
         snapshot.docs.map((e) => ProductModel.fromSnapshot(e)).toList();

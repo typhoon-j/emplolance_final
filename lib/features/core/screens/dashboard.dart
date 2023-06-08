@@ -9,7 +9,7 @@ import '../../authentication/controllers/profile_controller.dart';
 import '../widgets/appbar.dart';
 import '../widgets/banners.dart';
 import '../widgets/categories.dart';
-import '../widgets/top_courses.dart';
+import '../widgets/top_products.dart';
 import '../widgets/top_users.dart';
 
 class Dashboard extends StatelessWidget {

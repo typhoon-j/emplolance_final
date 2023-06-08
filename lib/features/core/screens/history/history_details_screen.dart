@@ -16,7 +16,7 @@ import 'package:rating_dialog/rating_dialog.dart';
 import 'package:rounded_background_text/rounded_background_text.dart';
 
 import '../../widgets/products/UserDataProduct.dart';
-import '../../widgets/top_courses.dart';
+import '../../widgets/top_products.dart';
 import '../chat_screen.dart';
 
 class HistoryDetailsScreen extends StatelessWidget {

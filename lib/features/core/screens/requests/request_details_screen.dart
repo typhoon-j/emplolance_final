@@ -18,7 +18,7 @@ import 'package:rating_dialog/rating_dialog.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../widgets/products/UserDataProduct.dart';
-import '../../widgets/top_courses.dart';
+import '../../widgets/top_products.dart';
 import '../chat_screen.dart';
 
 class RequestDetailsScreen extends StatelessWidget {

@@ -27,6 +27,7 @@ class SearchRepository {
         .where('category', isEqualTo: category)
         .where('name', isGreaterThanOrEqualTo: searchTerm)
         .where('name', isLessThan: '${searchTerm}z')
+        .where('active', isEqualTo: true)
         .snapshots()
         .map((snapshot) {
       return snapshot.docs

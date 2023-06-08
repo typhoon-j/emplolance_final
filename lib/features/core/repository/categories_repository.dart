@@ -33,6 +33,7 @@ class CategoriesRepository extends GetxController {
     final snapshot = await _db
         .collection('products')
         .where('category', isEqualTo: category)
+        .where('active', isEqualTo: true)
         .get();
     final productData =
         snapshot.docs.map((e) => ProductModel.fromSnapshot(e)).toList();
