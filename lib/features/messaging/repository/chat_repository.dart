@@ -64,4 +64,45 @@ class ChatRepository {
       log(error.toString());
     });
   }
+
+  onSendMessages(Map<String, dynamic> messages, String chatRoomId) async {
+    await _firebaseFirestore
+        .collection('chats')
+        .doc(chatRoomId)
+        .collection('messages')
+        .add(messages);
+  }
+
+  onSendImage(String chatRoomId, String fullName, String fileName) async {
+    await _firebaseFirestore
+        .collection('chats')
+        .doc(chatRoomId)
+        .collection('messages')
+        .doc(fileName)
+        .set({
+      "sendby": fullName,
+      "message": "",
+      "type": "img",
+      "time": FieldValue.serverTimestamp(),
+    });
+  }
+
+  onSendImageError(String chatRoomId, String fileName) async {
+    await _firebaseFirestore
+        .collection('chats')
+        .doc(chatRoomId)
+        .collection('messages')
+        .doc(fileName)
+        .delete();
+  }
+
+  onSendImageSuccess(
+      String chatRoomId, String fileName, String imageUrl) async {
+    await _firebaseFirestore
+        .collection('chats')
+        .doc(chatRoomId)
+        .collection('messages')
+        .doc(fileName)
+        .update({"message": imageUrl});
+  }
 }
