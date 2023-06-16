@@ -8,6 +8,7 @@ class UserModel {
   final String password;
   final String description;
   final String? userId;
+  final String pushToken;
 
   const UserModel({
     this.id,
@@ -17,6 +18,7 @@ class UserModel {
     required this.password,
     required this.description,
     required this.userId,
+    required this.pushToken,
   });
 
   toJson() {
@@ -27,6 +29,7 @@ class UserModel {
       'password': password,
       'description': description,
       'userId': userId,
+      'pushToken': pushToken,
     };
   }
 
@@ -41,6 +44,7 @@ class UserModel {
       password: data['password'],
       description: data['description'],
       userId: data['userId'],
+      pushToken: data['pushToken'],
     );
   }
 
@@ -51,6 +55,7 @@ class UserModel {
         photo: 'photo',
         password: 'password',
         description: 'description',
-        userId: 'userId')
+        userId: 'userId',
+        pushToken: 'dsa')
   ];
 }

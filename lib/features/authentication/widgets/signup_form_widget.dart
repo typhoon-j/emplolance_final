@@ -213,6 +213,7 @@ class SignUpFormWidget extends StatelessWidget {
                       password: controller.password.text.trim(),
                       description: controller.description.text.trim(),
                       userId: 'temp',
+                      pushToken: 'temp',
                     );
                     log(_imageUrl);
 

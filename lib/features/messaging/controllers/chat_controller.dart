@@ -3,11 +3,13 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emplolance/features/authentication/models/user_model.dart';
+import 'package:emplolance/features/messaging/controllers/chat_notification_controller.dart';
 import 'package:emplolance/features/messaging/models/chat_model.dart';
 import 'package:emplolance/features/messaging/repository/chat_repository.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 
@@ -16,6 +18,7 @@ import '../../authentication/repository/user_repository.dart';
 class ChatController extends GetxController {
   final ChatRepository database = ChatRepository();
   final _userRepo = Get.put(UserRepository());
+  final notification = Get.put(ChatNotificationController());
 
   Future<List<ChatModel>> getUserChats(String userId) async {
     var chatsUser1 = <ChatModel>[];
@@ -40,14 +43,17 @@ class ChatController extends GetxController {
   }
 
   onSendMessage(TextEditingController _message, UserModel userData,
-      String chatRoomId) async {
+      UserModel currentUserData, String chatRoomId) async {
     if (_message.text.isNotEmpty) {
       Map<String, dynamic> messages = {
-        "sendby": userData.fullName,
+        "sendby": currentUserData.fullName,
         "message": _message.text,
         "type": "text",
         "time": FieldValue.serverTimestamp(),
       };
+
+      notification.sendPushNotification(
+          userData.userId, currentUserData.fullName, _message.text);
 
       _message.clear();
       return database.onSendMessages(messages, chatRoomId);
@@ -56,14 +62,14 @@ class ChatController extends GetxController {
     }
   }
 
-  Future uploadImage(
-      String chatRoomId, String fullName, File? imageFile) async {
+  Future uploadImage(String chatRoomId, UserModel userData,
+      UserModel currentUserData, File? imageFile) async {
     String fileName = Uuid().v1();
     int status = 1;
 
     await database.onSendImage(
       chatRoomId,
-      fullName,
+      currentUserData.fullName,
       fileName,
     );
 
@@ -81,7 +87,10 @@ class ChatController extends GetxController {
 
       await database.onSendImageSuccess(chatRoomId, fileName, imageUrl);
 
-      print(imageUrl);
+      notification.sendPushNotificationImage(
+          userData.userId, currentUserData.fullName);
+
+      log(imageUrl);
     }
   }
 }

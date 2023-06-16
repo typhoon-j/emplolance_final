@@ -49,6 +49,8 @@ dependencies:
   uuid: ^3.0.7
   rounded_background_text: ^0.3.0
   rating_dialog: ^2.0.4
+  firebase_messaging: ^14.6.2
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:

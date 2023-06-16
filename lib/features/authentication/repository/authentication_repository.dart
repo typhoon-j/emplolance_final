@@ -4,6 +4,7 @@ import 'package:emplolance/features/authentication/repository/exceptions/signup_
 import 'package:emplolance/features/authentication/screens/welcome_screen.dart';
 import 'package:emplolance/features/core/screens/dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 
 import '../controllers/signup_controller.dart';
@@ -16,6 +17,9 @@ class AuthenticationRepository extends GetxController {
   //Variables
   final _auth = FirebaseAuth.instance;
   late final Rx<User?> firebaseUser;
+  static late String pushToken;
+
+  static FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
   @override
   void onReady() {
@@ -30,6 +34,18 @@ class AuthenticationRepository extends GetxController {
         : Get.offAll(() => const Dashboard());
   }
 
+  static Future<void> getFirebaseMessagingToken() async {
+    var _pushToken;
+    await firebaseMessaging.requestPermission();
+
+    await firebaseMessaging.getToken().then((value) {
+      if (value != null) {
+        pushToken = value;
+        log('Push Token: $pushToken');
+      }
+    });
+  }
+
   Future<void> createUserWithEmailAndPassword(
       String email, String password, UserModel user) async {
     try {
@@ -37,6 +53,7 @@ class AuthenticationRepository extends GetxController {
           email: email, password: password);
 
       if (firebaseUser.value != null) {
+        await getFirebaseMessagingToken();
         final userModelNew = UserModel(
           fullName: user.fullName,
           email: user.email,
@@ -44,6 +61,7 @@ class AuthenticationRepository extends GetxController {
           password: user.password,
           description: user.description,
           userId: firebaseUser.value?.uid,
+          pushToken: pushToken,
         );
         log((firebaseUser.value?.uid).toString());
         SignUpController.instance.createUser(userModelNew);

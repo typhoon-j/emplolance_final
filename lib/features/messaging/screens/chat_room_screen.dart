@@ -12,8 +12,10 @@ class ChatRoomScreen extends StatelessWidget {
   ChatRoomScreen({
     required this.chatRoomId,
     required this.userData,
+    required this.currentUserData,
   });
   final UserModel userData;
+  final UserModel currentUserData;
   final String chatRoomId;
 
   final TextEditingController _message = TextEditingController();
@@ -28,7 +30,8 @@ class ChatRoomScreen extends StatelessWidget {
     await _picker.pickImage(source: ImageSource.gallery).then((xFile) {
       if (xFile != null) {
         imageFile = File(xFile.path);
-        controller.uploadImage(chatRoomId, userData.fullName, imageFile);
+        controller.uploadImage(
+            chatRoomId, userData, currentUserData, imageFile);
       }
     });
   }
@@ -120,7 +123,7 @@ class ChatRoomScreen extends StatelessWidget {
                         color: tPrimaryColor,
                         onPressed: () {
                           controller.onSendMessage(
-                              _message, userData, chatRoomId);
+                              _message, userData, currentUserData, chatRoomId);
                         }),
                   ],
                 ),
@@ -136,7 +139,7 @@ class ChatRoomScreen extends StatelessWidget {
     return map['type'] == "text"
         ? Container(
             width: size.width,
-            alignment: map['sendby'] == userData.fullName
+            alignment: map['sendby'] == currentUserData.fullName
                 ? Alignment.centerRight
                 : Alignment.centerLeft,
             child: Container(
@@ -162,7 +165,7 @@ class ChatRoomScreen extends StatelessWidget {
             height: size.height / 2.5,
             width: size.width,
             padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-            alignment: map['sendby'] == userData.fullName
+            alignment: map['sendby'] == currentUserData.fullName
                 ? Alignment.centerRight
                 : Alignment.centerLeft,
             child: InkWell(

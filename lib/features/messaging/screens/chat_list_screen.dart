@@ -68,21 +68,29 @@ class ChatListScreen extends StatelessWidget {
                                     var userFutureData = await listController
                                         .getUserSelectedData(
                                             snapshot.data![index].userId1);
+                                    var currentUserData = await listController
+                                        .getUserSelectedData(
+                                            snapshot.data![index].userId2);
 
                                     Get.to(() => ChatRoomScreen(
-                                          chatRoomId:
-                                              snapshot.data![index].chatId,
-                                          userData: userFutureData,
-                                        ));
+                                        chatRoomId:
+                                            snapshot.data![index].chatId,
+                                        userData: userFutureData,
+                                        currentUserData: currentUserData));
                                   } else {
                                     var userFutureData = await listController
                                         .getUserSelectedData(
                                             snapshot.data![index].userId2);
 
+                                    var currentUserData = await listController
+                                        .getUserSelectedData(
+                                            snapshot.data![index].userId1);
+
                                     Get.to(() => ChatRoomScreen(
                                           chatRoomId:
                                               snapshot.data![index].chatId,
                                           userData: userFutureData,
+                                          currentUserData: currentUserData,
                                         ));
                                   }
                                 },
