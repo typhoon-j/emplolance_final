@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:emplolance/features/core/controllers/request_notification_controller.dart';
+
 import '../../../../constants/colors.dart';
 import '../../controllers/product_controller.dart';
 import 'package:emplolance/features/core/controllers/request_controller.dart';
@@ -27,6 +29,7 @@ class RequestProductScreen extends StatelessWidget {
   final requestController = Get.put(RequestController());
   RequestRepository database = RequestRepository();
   final controller = Get.put(ProductController());
+  final notification = Get.put(RequestNotificationController());
 
   var uuid = Uuid();
 
@@ -230,6 +233,8 @@ class RequestProductScreen extends StatelessWidget {
                                       .newRequest['isInProgress'],
                                 ),
                               );
+                              notification.sendPushNotification(
+                                  publisherUserId, productId);
                               Get.back();
                             },
                             child: Text(

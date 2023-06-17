@@ -17,6 +17,7 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:rating_dialog/rating_dialog.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../controllers/request_notification_controller.dart';
 import '../../widgets/products/UserDataProduct.dart';
 import '../../widgets/top_products.dart';
 import '../chat_screen.dart';
@@ -31,6 +32,7 @@ class RequestDetailsScreen extends StatelessWidget {
   final ratingController = Get.put(RatingController());
   final chatController = Get.put(ChatController());
   final User? user = FirebaseAuth.instance.currentUser;
+  final notification = Get.put(RequestNotificationController());
   var uuid = Uuid();
 
   final String requestId;
@@ -179,6 +181,11 @@ class RequestDetailsScreen extends StatelessWidget {
                                               await chatController
                                                   .createChatroom(
                                                       chatroomCreate);
+                                              notification
+                                                  .sendPushNotificationRequestStatus(
+                                                      requestData.consumerId,
+                                                      requestData.productId,
+                                                      'El anunciante acepto tu solicitud del anuncio: ');
                                             },
                                             child: Text(
                                               'Aceptar',
@@ -226,6 +233,11 @@ class RequestDetailsScreen extends StatelessWidget {
                                               await controller
                                                   .updateRequestData(
                                                       requestCancelData);
+                                              notification
+                                                  .sendPushNotificationRequestStatus(
+                                                      requestData.consumerId,
+                                                      requestData.productId,
+                                                      'El anunciante rechazo tu solicitud del anuncio: ');
                                               Get.back();
                                             },
                                             child: Text(
@@ -276,6 +288,11 @@ class RequestDetailsScreen extends StatelessWidget {
                                               await controller
                                                   .updateRequestData(
                                                       requestInProgressData);
+                                              notification
+                                                  .sendPushNotificationRequestStatus(
+                                                      requestData.consumerId,
+                                                      requestData.productId,
+                                                      'El anunciante comenzo a trabajar en tu solicitud del anuncio: ');
                                               Get.back();
                                             },
                                             child: Text(
@@ -374,6 +391,11 @@ class RequestDetailsScreen extends StatelessWidget {
                                               await controller
                                                   .updateRequestData(
                                                       requestFinishData);
+                                              notification
+                                                  .sendPushNotificationRequestStatus(
+                                                      requestData.consumerId,
+                                                      requestData.productId,
+                                                      'El anunciante finalizo el trabajo de tu solicitud del anuncio: ');
                                               Get.back();
                                             },
                                             child: Text(
