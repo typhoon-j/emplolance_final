@@ -177,19 +177,34 @@ class UpdateProductScreen extends StatelessWidget {
                               log('description : ${description.text.trim()}');
                               log('price : ${price.text.trim()}');
                               log('category : ${categoryChoose.trim()}');
-                              final newProductData = ProductModel(
-                                id: productData.id,
-                                name: name.text.trim(),
-                                category: categoryChoose.trim(),
-                                imageUrl: _imageUrl,
-                                description: description.text.trim(),
-                                userId: productData.userId,
-                                productId: productData.productId,
-                                price: double.parse(price.text.trim()),
-                                active: productData.active,
-                              );
-                              await productController
-                                  .updateProductData(newProductData);
+                              try {
+                                final newProductData = ProductModel(
+                                  id: productData.id,
+                                  name: name.text.trim(),
+                                  category: categoryChoose.trim(),
+                                  imageUrl: _imageUrl,
+                                  description: description.text.trim(),
+                                  userId: productData.userId,
+                                  productId: productData.productId,
+                                  price: double.parse(price.text.trim()),
+                                  active: productData.active,
+                                );
+                                await productController
+                                    .updateProductData(newProductData);
+                                Get.snackbar('Anuncio Actualizado',
+                                    'Tu anuncio fue actualizado con exito!',
+                                    snackPosition: SnackPosition.BOTTOM,
+                                    backgroundColor:
+                                        tPrimaryColor.withOpacity(0.4),
+                                    colorText: tSecondaryColor);
+                              } on Exception catch (e) {
+                                Get.snackbar('Error', 'Something went wrong',
+                                    snackPosition: SnackPosition.BOTTOM,
+                                    backgroundColor:
+                                        Colors.red.withOpacity(0.1),
+                                    colorText: Colors.red);
+                                log(e.toString());
+                              }
                             },
                             child: Text(
                               'Actualizar Anuncio',

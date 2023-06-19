@@ -209,33 +209,47 @@ class RequestProductScreen extends StatelessWidget {
                                   .toString());
 
                               log(requestController.newRequest['description']);
-                              database.addRequest(
-                                RequestModel(
-                                  consumerId: requestController
-                                      .newRequest['consumerId'],
-                                  publisherId: requestController
-                                      .newRequest['publisherId'],
-                                  productId:
-                                      requestController.newRequest['productId'],
-                                  requestId:
-                                      requestController.newRequest['requestId'],
-                                  description: requestController
-                                      .newRequest['description'],
-                                  isPending:
-                                      requestController.newRequest['isPending'],
-                                  isAccepted: requestController
-                                      .newRequest['isAccepted'],
-                                  isCancelled: requestController
-                                      .newRequest['isCanceled'],
-                                  isFinished: requestController
-                                      .newRequest['isFinished'],
-                                  isInProgress: requestController
-                                      .newRequest['isInProgress'],
-                                ),
-                              );
-                              notification.sendPushNotification(
-                                  publisherUserId, productId);
-                              Get.back();
+                              try {
+                                database.addRequest(
+                                  RequestModel(
+                                    consumerId: requestController
+                                        .newRequest['consumerId'],
+                                    publisherId: requestController
+                                        .newRequest['publisherId'],
+                                    productId: requestController
+                                        .newRequest['productId'],
+                                    requestId: requestController
+                                        .newRequest['requestId'],
+                                    description: requestController
+                                        .newRequest['description'],
+                                    isPending: requestController
+                                        .newRequest['isPending'],
+                                    isAccepted: requestController
+                                        .newRequest['isAccepted'],
+                                    isCancelled: requestController
+                                        .newRequest['isCanceled'],
+                                    isFinished: requestController
+                                        .newRequest['isFinished'],
+                                    isInProgress: requestController
+                                        .newRequest['isInProgress'],
+                                  ),
+                                );
+                                notification.sendPushNotification(
+                                    publisherUserId, productId);
+                                Get.snackbar('Solicitud Realizada',
+                                    'Tu solicitud fue realizada con exito!',
+                                    snackPosition: SnackPosition.BOTTOM,
+                                    backgroundColor:
+                                        tPrimaryColor.withOpacity(0.4),
+                                    colorText: tSecondaryColor);
+                              } on Exception catch (e) {
+                                Get.snackbar('Error', 'Something went wrong',
+                                    snackPosition: SnackPosition.BOTTOM,
+                                    backgroundColor:
+                                        Colors.red.withOpacity(0.1),
+                                    colorText: Colors.red);
+                                log(e.toString());
+                              }
                             },
                             child: Text(
                               'Solicitar',

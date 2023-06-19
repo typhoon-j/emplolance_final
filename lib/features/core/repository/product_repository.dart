@@ -60,23 +60,7 @@ class DatabaseService {
   }
 
   Future<void> addProduct(ProductModel product) {
-    return _firebaseFirestore
-        .collection('products')
-        .add(product.toMap())
-        .whenComplete(
-          () => Get.snackbar(
-              'Anuncio Creado', 'Tu anuncio fue creado con exito!',
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: tPrimaryColor.withOpacity(0.4),
-              colorText: tSecondaryColor),
-        )
-        .catchError((error, stackTrace) {
-      Get.snackbar('Error', 'Something went wrong',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red.withOpacity(0.1),
-          colorText: Colors.red);
-      log(error.toString());
-    });
+    return _firebaseFirestore.collection('products').add(product.toMap());
   }
 
   Future<void> updateProduct(ProductModel product) {
@@ -84,21 +68,7 @@ class DatabaseService {
     return _firebaseFirestore
         .collection('products')
         .doc(product.id)
-        .update(product.toMap())
-        .whenComplete(
-          () => Get.snackbar(
-              'Anuncio Actualizado', 'Tu anuncio fue actualizado con exito!',
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: tPrimaryColor.withOpacity(0.4),
-              colorText: tSecondaryColor),
-        )
-        .catchError((error, stackTrace) {
-      Get.snackbar('Error', 'Something went wrong',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red.withOpacity(0.1),
-          colorText: Colors.red);
-      log(error.toString());
-    });
+        .update(product.toMap());
   }
 
   Future<UserModel> getUserDetailsId(String userId) async {
@@ -115,26 +85,6 @@ class DatabaseService {
     await _firebaseFirestore
         .collection('products')
         .doc(product.id)
-        .update(product.toMap())
-        .whenComplete(
-          () => Get.snackbar(
-            'Datos Actualizados',
-            'Anuncio actualizado con exito.',
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: tPrimaryColor.withOpacity(0.4),
-            colorText: tSecondaryColor,
-          ),
-        )
-        .catchError((error, stackTrace) {
-      Get.snackbar(
-        'Error',
-        'Something went wrong',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red.withOpacity(0.1),
-        colorText: Colors.red,
-      );
-
-      log(error.toString());
-    });
+        .update(product.toMap());
   }
 }

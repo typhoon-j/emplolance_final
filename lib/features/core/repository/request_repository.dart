@@ -40,24 +40,7 @@ class RequestRepository {
   }
 
   Future<void> addRequest(RequestModel request) {
-    return _firebaseFirestore
-        .collection('requests')
-        .add(request.toMap())
-        .whenComplete(
-          () => Get.snackbar(
-              'Solicitud Realizada', 'Tu solicitud fue realizada con exito!',
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: tPrimaryColor.withOpacity(0.4),
-              colorText: tSecondaryColor),
-        )
-        .catchError((error, stackTrace) {
-      Get.snackbar('Error', 'Something went wrong',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red.withOpacity(0.1),
-          colorText: Colors.red);
-      log(error.toString());
-    });
-    ;
+    return _firebaseFirestore.collection('requests').add(request.toMap());
   }
 
   Future<UserModel> getUserDetailsId(String userId) async {

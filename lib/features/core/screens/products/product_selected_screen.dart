@@ -171,25 +171,51 @@ class ProductSelectedScreen extends StatelessWidget {
                                         productData.active == true
                                             ? ElevatedButton(
                                                 onPressed: () async {
-                                                  final productAvailableData =
-                                                      ProductModel(
-                                                    id: productData.id,
-                                                    name: productData.name,
-                                                    category:
-                                                        productData.category,
-                                                    imageUrl:
-                                                        productData.imageUrl,
-                                                    description:
-                                                        productData.description,
-                                                    userId: productData.userId,
-                                                    productId:
-                                                        productData.productId,
-                                                    price: productData.price,
-                                                    active: false,
-                                                  );
-                                                  await controller
-                                                      .updateProductAvailableData(
-                                                          productAvailableData);
+                                                  try {
+                                                    final productAvailableData =
+                                                        ProductModel(
+                                                      id: productData.id,
+                                                      name: productData.name,
+                                                      category:
+                                                          productData.category,
+                                                      imageUrl:
+                                                          productData.imageUrl,
+                                                      description: productData
+                                                          .description,
+                                                      userId:
+                                                          productData.userId,
+                                                      productId:
+                                                          productData.productId,
+                                                      price: productData.price,
+                                                      active: false,
+                                                    );
+                                                    await controller
+                                                        .updateProductAvailableData(
+                                                            productAvailableData);
+                                                    Get.snackbar(
+                                                      'Datos Actualizados',
+                                                      'Anuncio actualizado con exito.',
+                                                      snackPosition:
+                                                          SnackPosition.BOTTOM,
+                                                      backgroundColor:
+                                                          tPrimaryColor
+                                                              .withOpacity(0.4),
+                                                      colorText:
+                                                          tSecondaryColor,
+                                                    );
+                                                  } on Exception catch (e) {
+                                                    Get.snackbar(
+                                                      'Error',
+                                                      'Something went wrong',
+                                                      snackPosition:
+                                                          SnackPosition.BOTTOM,
+                                                      backgroundColor: Colors
+                                                          .red
+                                                          .withOpacity(0.1),
+                                                      colorText: Colors.red,
+                                                    );
+                                                    log(e.toString());
+                                                  }
                                                 },
                                                 style: ElevatedButton.styleFrom(
                                                   backgroundColor: Colors
@@ -204,25 +230,51 @@ class ProductSelectedScreen extends StatelessWidget {
                                               )
                                             : ElevatedButton(
                                                 onPressed: () async {
-                                                  final productAvailableData =
-                                                      ProductModel(
-                                                    id: productData.id,
-                                                    name: productData.name,
-                                                    category:
-                                                        productData.category,
-                                                    imageUrl:
-                                                        productData.imageUrl,
-                                                    description:
-                                                        productData.description,
-                                                    userId: productData.userId,
-                                                    productId:
-                                                        productData.productId,
-                                                    price: productData.price,
-                                                    active: true,
-                                                  );
-                                                  await controller
-                                                      .updateProductAvailableData(
-                                                          productAvailableData);
+                                                  try {
+                                                    final productAvailableData =
+                                                        ProductModel(
+                                                      id: productData.id,
+                                                      name: productData.name,
+                                                      category:
+                                                          productData.category,
+                                                      imageUrl:
+                                                          productData.imageUrl,
+                                                      description: productData
+                                                          .description,
+                                                      userId:
+                                                          productData.userId,
+                                                      productId:
+                                                          productData.productId,
+                                                      price: productData.price,
+                                                      active: true,
+                                                    );
+                                                    await controller
+                                                        .updateProductAvailableData(
+                                                            productAvailableData);
+                                                    Get.snackbar(
+                                                      'Datos Actualizados',
+                                                      'Anuncio actualizado con exito.',
+                                                      snackPosition:
+                                                          SnackPosition.BOTTOM,
+                                                      backgroundColor:
+                                                          tPrimaryColor
+                                                              .withOpacity(0.4),
+                                                      colorText:
+                                                          tSecondaryColor,
+                                                    );
+                                                  } on Exception catch (e) {
+                                                    Get.snackbar(
+                                                      'Error',
+                                                      'Something went wrong',
+                                                      snackPosition:
+                                                          SnackPosition.BOTTOM,
+                                                      backgroundColor: Colors
+                                                          .red
+                                                          .withOpacity(0.1),
+                                                      colorText: Colors.red,
+                                                    );
+                                                    log(e.toString());
+                                                  }
                                                 },
                                                 style: ElevatedButton.styleFrom(
                                                   backgroundColor: Colors

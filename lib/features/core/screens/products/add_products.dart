@@ -174,25 +174,39 @@ class AddProductScreen extends StatelessWidget {
                             onPressed: () {
                               log('userId: ${productController.newProduct['userId']}');
                               log('ProductId: ${productController.newProduct['productId']}');
-                              database.addProduct(
-                                ProductModel(
-                                  name: productController.newProduct['name'],
-                                  category:
-                                      productController.newProduct['category'],
-                                  imageUrl:
-                                      productController.newProduct['imageUrl'],
-                                  description: productController
-                                      .newProduct['description'],
-                                  userId:
-                                      productController.newProduct['userId'],
-                                  productId:
-                                      productController.newProduct['productId'],
-                                  price: double.parse(
-                                      productController.newProduct['price']),
-                                  active: true,
-                                ),
-                              );
-                              Get.back();
+                              try {
+                                database.addProduct(
+                                  ProductModel(
+                                    name: productController.newProduct['name'],
+                                    category: productController
+                                        .newProduct['category'],
+                                    imageUrl: productController
+                                        .newProduct['imageUrl'],
+                                    description: productController
+                                        .newProduct['description'],
+                                    userId:
+                                        productController.newProduct['userId'],
+                                    productId: productController
+                                        .newProduct['productId'],
+                                    price: double.parse(
+                                        productController.newProduct['price']),
+                                    active: true,
+                                  ),
+                                );
+                                Get.snackbar('Anuncio Creado',
+                                    'Tu anuncio fue creado con exito!',
+                                    snackPosition: SnackPosition.BOTTOM,
+                                    backgroundColor:
+                                        tPrimaryColor.withOpacity(0.4),
+                                    colorText: tSecondaryColor);
+                              } on Exception catch (e) {
+                                Get.snackbar('Error', 'Something went wrong',
+                                    snackPosition: SnackPosition.BOTTOM,
+                                    backgroundColor:
+                                        Colors.red.withOpacity(0.1),
+                                    colorText: Colors.red);
+                                log(e.toString());
+                              }
                             },
                             child: Text(
                               'Crear Anuncio',
